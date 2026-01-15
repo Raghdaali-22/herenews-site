@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Here News — Coming Soon</title>
+  <meta name="description" content="Here News is coming soon — an independent platform for science, knowledge, and truth in Arabic." />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="index.html" aria-label="Here News home">
+        <span class="logo" aria-hidden="true"></span>
+        <span>Here News</span>
+      </a>
+      <nav class="navlinks" aria-label="Primary navigation">
+        <a class="active" href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="project.html">Scientific Project</a>
+        <a class="btn primary" href="project.html#donate">Donate</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container heroGrid">
+        <div>
+          <div class="kicker"><span class="dot"></span> Coming soon</div>
+          <h1>Science, knowledge, and truth — built for the Arabic-speaking world.</h1>
+          <p class="lede">
+            Here News is an independent platform in development. The goal is to publish rigorous, culturally grounded scientific content,
+            reconnect learners with original sources, and support responsible technology that preserves meaning — not distortion.
+          </p>
+
+          <div class="ctaRow">
+            <a class="btn primary" href="project.html">Explore our first initiative</a>
+            <a class="btn ghost" href="#follow">Follow the story</a>
+          </div>
+
+          <div class="hr"></div>
+
+          <div class="grid">
+            <div class="card col-6">
+              <h3>Mission</h3>
+              <p>
+                Build a credible, accessible science-first media platform in Arabic that prioritizes accuracy,
+                depth, and original context — free from shallow translation and trend-driven content.
+              </p>
+            </div>
+            <div class="card col-6">
+              <h3>Vision</h3>
+              <p>
+                A future where Arabic is a first-class language for scientific thinking, learning, and discovery —
+                connected to both classical heritage and modern research.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <aside class="card">
+          <h3>What is Here News?</h3>
+          <p class="small">
+            A long-term knowledge platform that bridges heritage, modern science, and future technology.
+            Not built for clicks — built for continuity.
+          </p>
+          <div class="pills" aria-label="Focus areas">
+            <span class="pill">Science explainers</span>
+            <span class="pill">Original sources</span>
+            <span class="pill">Arabic terminology</span>
+            <span class="pill">Responsible AI</span>
+            <span class="pill">Youth learning</span>
+          </div>
+
+          <div class="hr"></div>
+
+          <p class="small">
+            Our first flagship initiative is the <strong>Scientific News Channel Project</strong>, focused on protecting and reviving
+            original Arabic scientific manuscripts and building a modern knowledge ecosystem.
+          </p>
+          <a class="btn primary" href="project.html">Learn more</a>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="follow">
+      <div class="container">
+        <div class="grid">
+          <div class="card col-8">
+            <h2>Follow the journey</h2>
+            <p>
+              Join the mailing list for project milestones, early content, and behind-the-scenes updates.
+            </p>
+
+            <!-- SIMPLE EMAIL CAPTURE (works immediately):
+                 This uses "mailto" so it's truly static/free.
+                 Upgrade later to Formspree/ConvertKit/Substack by swapping the form action. -->
+            <form class="formRow" action="mailto:YOUR_EMAIL_HERE?subject=Here%20News%20Updates" method="post" enctype="text/plain">
+              <input type="email" name="email" placeholder="Your email address" required />
+              <button class="btn primary" type="submit">Sign up</button>
+            </form>
+
+            <p class="small">
+              Prefer a proper email tool later? You can replace this with ConvertKit/Substack/Formspree without changing the page design.
+            </p>
+          </div>
+
+          <div class="card col-4">
+            <h2>Start here</h2>
+            <p class="small">
+              Read about Ali Gamal’s background and why these initiatives are being built.
+            </p>
+            <a class="btn" href="about.html">About Ali Gamal</a>
+            <div class="hr"></div>
+            <p class="small notice">
+              Tip: once donations are live, this site can grow into a full portal (updates page, media library, manuscript archive, etc.).
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footerGrid">
+      <div>© <span id="year"></span> Here News</div>
+      <div>
+        <a href="project.html">Scientific Project</a> ·
+        <a href="about.html">About</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
