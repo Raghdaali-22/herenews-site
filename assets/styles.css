@@ -283,4 +283,24 @@ footer{
   .profilePhoto{
     max-width: 360px;
   }
+/* Append to assets/styles.css */
+.publication-main{min-height:65vh;padding-top:42px;padding-bottom:52px}
+.publication-heading{margin-bottom:34px}
+.publication-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px}
+.publication-card{display:flex;flex-direction:column;gap:8px}
+.publication-card img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px}
+.publication-card h2{font-size:25px;line-height:1.2;margin:4px 0}
+.publication-card p{margin:0;color:var(--muted)}
+.publication-read{margin-top:auto;text-decoration:underline;text-underline-offset:4px;font-weight:bold}
+.publication-article{max-width:800px;margin:auto}
+.publication-article h1{overflow-wrap:anywhere}
+.publication-cover{width:100%;height:auto;border-radius:var(--radius);margin:20px 0}
+.publication-body{font-size:19px;line-height:1.85;overflow-wrap:anywhere}
+.publication-body img{max-width:100%;height:auto}
+.publication-body p,.publication-body h2,.publication-body h3{unicode-bidi:plaintext;text-align:start}
+.publication-body [dir="rtl"]{direction:rtl;text-align:right}
+.video-frame{position:relative;aspect-ratio:16/9;margin:22px 0}
+.video-frame iframe{width:100%;height:100%;border:0;border-radius:12px}
+
+  
 }
