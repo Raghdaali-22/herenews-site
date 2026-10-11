@@ -12,9 +12,9 @@ permalink: /publications/index.html
 {% if item.inputPath.includes('/articles/') %}
   {% set itemUrl = "/publications/articles/" + (item.fileSlug | slugify) + "/" %}
 {% elif item.inputPath.includes('/documentaries/') %}
-  {% set itemUrl = "/publications/documentaries/" + (item.fileSlug | slugify) + "/" %}
+  {% set itemUrl = "/publications/documentaries/" + item.fileSlug + "/" %}
 {% else %}
-  {% set itemUrl = "/publications/audio/" + (item.fileSlug | slugify) + "/" %}
+  {% set itemUrl = "/publications/audio/" + item.fileSlug + "/" %}
 {% endif %}
 
 <article class="card publication-card">
