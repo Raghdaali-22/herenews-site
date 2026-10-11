@@ -302,5 +302,53 @@ footer{
 .video-frame{position:relative;aspect-ratio:16/9;margin:22px 0}
 .video-frame iframe{width:100%;height:100%;border:0;border-radius:12px}
 
+/* === PUBLICATION IMAGE SIZE FIX === */
+
+.publication-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.publication-card {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.publication-card > a:has(img) {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.publication-card img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: 240px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 12px;
+}
+
+.publication-card h2,
+.publication-card p {
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 760px) {
+  .publication-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1050px) {
+  .publication-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
   
 }
