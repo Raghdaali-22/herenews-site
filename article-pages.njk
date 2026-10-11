@@ -1,0 +1,15 @@
+---
+layout: layout.njk
+pagination:
+  data: collections.articles
+  size: 1
+  alias: post
+permalink: "/publications/articles/{{ post.fileSlug }}/index.html"
+eleventyComputed:
+  title: "{{ post.data.title }}"
+  description: "{{ post.data.description }}"
+---
+<article class="publication-article"><p><a href="/publications/">← All publications</a></p><p class="small">Article · {{ post.data.date | shortDate }}</p><h1>{{ post.data.title | escape }}</h1><p class="small">By {{ post.data.author | default('Here News') | escape }}</p>
+{% if post.data.image %}<img class="publication-cover" src="{{ post.data.image | escape }}" alt="">{% endif %}
+{% if post.data.description %}<p class="lede">{{ post.data.description | escape }}</p>{% endif %}
+<div class="publication-body">{{ post.templateContent | safe }}</div></article>
