@@ -283,7 +283,9 @@ footer{
   .profilePhoto{
     max-width: 360px;
   }
-/* Append to assets/styles.css */
+}
+
+/* === PUBLICATIONS === */
 .publication-main{min-height:65vh;padding-top:42px;padding-bottom:52px}
 .publication-heading{margin-bottom:34px}
 .publication-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px}
@@ -382,5 +384,42 @@ article,
   overflow-wrap: anywhere;
 }
 
-  
+ 
+/* === ARTICLE COVER IMAGE SIZES === */
+
+.publication-cover-wrapper {
+  width: 100%;
+  margin: 26px auto;
+  text-align: center;
 }
+
+.publication-cover-wrapper .publication-cover {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+  margin: 0 auto;
+  border-radius: 12px;
+}
+
+/* Small */
+.publication-cover-wrapper.cover-small {
+  max-width: 300px;
+}
+
+/* Medium — default */
+.publication-cover-wrapper.cover-medium {
+  max-width: 500px;
+}
+
+/* Large */
+.publication-cover-wrapper.cover-large {
+  max-width: 700px;
+}
+
+/* Full width of the article */
+.publication-cover-wrapper.cover-full {
+  max-width: 100%;
+}
+ 
