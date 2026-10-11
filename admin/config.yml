@@ -74,5 +74,21 @@ collections:
       - { label: "Date", name: "date", widget: "datetime" }
       - { label: "Description", name: "description", widget: "text" }
       - { label: "Cover Image", name: "image", widget: "image", required: false }
-      - { label: "Audio URL", name: "audio_url", widget: "string" }
+      
+      - label: "Audio File (MP3)"
+        name: "audio_url"
+        widget: "file"
+        required: false
+        media_folder: "/assets/uploads/audio"
+        public_folder: "/assets/uploads/audio"
+        media_library:
+          config:
+            multiple: false
+
+      - label: "External MP3 URL"
+        name: "external_audio_url"
+        widget: "string"
+        required: false
+        hint: "Optional: use a direct MP3 link if the file is hosted elsewhere."
+
       - { label: "Transcript or Notes", name: "body", widget: "markdown", required: false }
