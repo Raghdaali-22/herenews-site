@@ -1,5 +1,4 @@
 
-
 backend:
   name: git-gateway
   repo: Raghdaali-22/herenews-site
@@ -9,7 +8,6 @@ backend:
   auth_endpoint: /sites/5860bdf0-ee45-47bc-bca5-dfc0ae61760a/pkce
   auth_token_endpoint: /sites/5860bdf0-ee45-47bc-bca5-dfc0ae61760a/token
   gateway_url: https://gateway.decapbridge.com
-
 
 site_url: https://herenews.net
 display_url: https://herenews.net
@@ -29,15 +27,12 @@ collections:
     slug: "{{slug}}"
     extension: "md"
     format: "frontmatter"
-
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Author", name: "author", widget: "string", default: "Ali Gamal" }
       - { label: "Publication Date", name: "date", widget: "datetime" }
       - { label: "Summary", name: "description", widget: "text" }
-     
       - { label: "Cover Image", name: "image", widget: "image", required: false }
-
       - label: "Cover Image Size"
         name: "image_size"
         widget: "select"
@@ -48,9 +43,7 @@ collections:
           - { label: "Full Width", value: "full" }
         default: "medium"
         required: false
-
       - { label: "Article", name: "body", widget: "markdown" }
-
 
   - name: "documentaries"
     label: "Documentaries & Videos"
@@ -59,7 +52,6 @@ collections:
     slug: "{{slug}}"
     extension: "md"
     format: "frontmatter"
-
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Author", name: "author", widget: "string", default: "Ali Gamal" }
@@ -76,7 +68,6 @@ collections:
     slug: "{{slug}}"
     extension: "md"
     format: "frontmatter"
-
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Author", name: "author", widget: "string", default: "Ali Gamal" }
