@@ -1,0 +1,16 @@
+---
+layout: layout.njk
+pagination:
+  data: collections.documentaries
+  size: 1
+  alias: post
+permalink: "/publications/documentaries/{{ post.fileSlug }}/index.html"
+eleventyComputed:
+  title: "{{ post.data.title }}"
+  description: "{{ post.data.description }}"
+---
+<article class="publication-article"><p><a href="/publications/">← All publications</a></p><p class="small">Documentary / Video · {{ post.data.date | shortDate }}</p><h1>{{ post.data.title | escape }}</h1><p class="small">By {{ post.data.author | default('Here News') | escape }}</p>
+{% if post.data.image %}<img class="publication-cover" src="{{ post.data.image | escape }}" alt="">{% endif %}
+{% if post.data.description %}<p class="lede">{{ post.data.description | escape }}</p>{% endif %}
+{% if post.data.video_url %}{% set embed = post.data.video_url | youtubeEmbed %}{% if embed %}<div class="video-frame"><iframe src="{{ embed }}" title="Video" loading="lazy" allowfullscreen></iframe></div>{% endif %}<p><a class="btn" href="{{ post.data.video_url | escape }}" target="_blank" rel="noopener noreferrer">Watch video ↗</a></p>{% endif %}
+<div class="publication-body">{{ post.templateContent | safe }}</div></article>
