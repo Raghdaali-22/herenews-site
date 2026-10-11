@@ -5,8 +5,8 @@ pagination:
   data: collections.articles
   size: 1
   alias: post
-permalink: "/publications/articles/{{ post.fileSlug | slugify }}/index.html"
 eleventyComputed:
+  permalink: "/publications/articles/{{ post.fileSlug | slugify }}/index.html"
   title: "{{ post.data.title }}"
   description: "{{ post.data.description }}"
 ---
