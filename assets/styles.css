@@ -422,4 +422,32 @@ article,
 .publication-cover-wrapper.cover-full {
   max-width: 100%;
 }
+
+
+/* === HERE NEWS AUDIO PLAYER === */
+
+.audio-player-section {
+  margin: 32px 0;
+  padding: 24px;
+  background: rgba(255,255,255,.48);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+
+.audio-player-section h2 {
+  font-size: 23px;
+  margin: 0 0 16px;
+}
+
+.audio-player-section audio {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 0 12px;
+}
+
+.audio-player-section .small {
+  margin-bottom: 0;
+}
+
  
