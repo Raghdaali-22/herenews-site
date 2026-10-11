@@ -1,0 +1,20 @@
+---
+layout: layout.njk
+title: Publications
+permalink: /publications/index.html
+---
+<section class="publication-heading"><span class="kicker"><span class="dot"></span> Here News publications</span><h1>Stories worth telling.</h1><p class="lede">Articles, documentaries, videos and audio projects.</p></section>
+{% set allItems = collections.articles.concat(collections.documentaries).concat(collections.audio) %}
+{% if allItems.length %}
+<div class="publication-grid">
+{% for item in allItems | sort(false, false, 'data.date') | reverse %}
+<article class="card publication-card">
+{% if item.data.image %}<a href="{{ item.url }}"><img src="{{ item.data.image | escape }}" alt="" loading="lazy"></a>{% endif %}
+<p class="small">{% if item.inputPath.includes('/articles/') %}Article{% elif item.inputPath.includes('/documentaries/') %}Documentary / Video{% else %}Audio{% endif %} · {{ item.data.date | shortDate }}</p>
+<h2><a href="{{ item.url }}">{{ item.data.title | escape }}</a></h2>
+<p>{{ item.data.description | default('') | escape }}</p><p class="small">By {{ item.data.author | default('Here News') | escape }}</p>
+<a class="publication-read" href="{{ item.url }}">Read / View →</a>
+</article>
+{% endfor %}
+</div>
+{% else %}<div class="card"><p>Publications will appear here as they are published.</p></div>{% endif %}
