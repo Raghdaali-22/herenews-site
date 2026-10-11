@@ -8,12 +8,21 @@ permalink: /publications/index.html
 {% if allItems.length %}
 <div class="publication-grid">
 {% for item in allItems | sort(false, false, 'data.date') | reverse %}
+
+{% if item.inputPath.includes('/articles/') %}
+  {% set itemUrl = "/publications/articles/" + item.fileSlug + "/" %}
+{% elif item.inputPath.includes('/documentaries/') %}
+  {% set itemUrl = "/publications/documentaries/" + item.fileSlug + "/" %}
+{% else %}
+  {% set itemUrl = "/publications/audio/" + item.fileSlug + "/" %}
+{% endif %}
+
 <article class="card publication-card">
-{% if item.data.image %}<a href="{{ item.url }}"><img src="{{ item.data.image | escape }}" alt="" loading="lazy"></a>{% endif %}
+{% if item.data.image %}<a href="{{ itemUrl }}"><img src="{{ item.data.image | escape }}" alt="" loading="lazy"></a>{% endif %}
 <p class="small">{% if item.inputPath.includes('/articles/') %}Article{% elif item.inputPath.includes('/documentaries/') %}Documentary / Video{% else %}Audio{% endif %} · {{ item.data.date | shortDate }}</p>
-<h2><a href="{{ item.url }}">{{ item.data.title | escape }}</a></h2>
+<h2><a href="{{ itemUrl }}">{{ item.data.title | escape }}</a></h2>
 <p>{{ item.data.description | default('') | escape }}</p><p class="small">By {{ item.data.author | default('Here News') | escape }}</p>
-<a class="publication-read" href="{{ item.url }}">Read / View →</a>
+<a class="publication-read" href="{{ itemUrl }}">Read / View →</a>
 </article>
 {% endfor %}
 </div>
