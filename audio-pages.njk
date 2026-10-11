@@ -1,16 +1,64 @@
+
 ---
 layout: layout.njk
 pagination:
   data: collections.audio
   size: 1
   alias: post
-permalink: "/publications/audio/{{ post.fileSlug }}/index.html"
+  addAllPagesToCollections: false
+permalink: "publications/audio/{{ post.fileSlug | slugify }}/index.html"
 eleventyComputed:
   title: "{{ post.data.title }}"
   description: "{{ post.data.description }}"
 ---
-<article class="publication-article"><p><a href="/publications/">← All publications</a></p><p class="small">Audio · {{ post.data.date | shortDate }}</p><h1>{{ post.data.title | escape }}</h1><p class="small">By {{ post.data.author | default('Here News') | escape }}</p>
-{% if post.data.image %}<img class="publication-cover" src="{{ post.data.image | escape }}" alt="">{% endif %}
-{% if post.data.description %}<p class="lede">{{ post.data.description | escape }}</p>{% endif %}
-{% if post.data.audio_url %}<p><a class="btn" href="{{ post.data.audio_url | escape }}" target="_blank" rel="noopener noreferrer">Listen to audio ↗</a></p>{% endif %}
-<div class="publication-body">{{ post.templateContent | safe }}</div></article>
+
+<article class="publication-article">
+
+  <p><a href="/publications/">← All publications</a></p>
+
+  <p class="small">
+    Audio · {{ post.data.date | shortDate }}
+  </p>
+
+  <h1>{{ post.data.title | escape }}</h1>
+
+  <p class="small">
+    By {{ post.data.author | default('Here News') | escape }}
+  </p>
+
+  {% if post.data.image %}
+    <div class="publication-cover-wrapper cover-medium">
+      <img
+        class="publication-cover"
+        src="{{ post.data.image | escape }}"
+        alt="{{ post.data.title | escape }}"
+      >
+    </div>
+  {% endif %}
+
+  {% if post.data.description %}
+    <p class="lede">{{ post.data.description | escape }}</p>
+  {% endif %}
+
+  {% if post.data.audio_url %}
+    <section class="audio-player-section">
+      <h2>Listen to this recording</h2>
+
+      <audio controls preload="metadata">
+        <source src="{{ post.data.audio_url | escape }}" type="audio/mpeg">
+        Your browser does not support HTML audio.
+      </audio>
+
+      <p class="small">
+        <a href="{{ post.data.audio_url | escape }}" target="_blank" rel="noopener noreferrer">
+          Open audio file ↗
+        </a>
+      </p>
+    </section>
+  {% endif %}
+
+  <div class="publication-body">
+    {{ post.templateContent | safe }}
+  </div>
+
+</article>
