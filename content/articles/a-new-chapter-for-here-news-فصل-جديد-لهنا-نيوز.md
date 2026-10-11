@@ -9,6 +9,7 @@ description: >-
 
   تستكشف منصة هنا نيوز نهجًا جديدًا للصحافة المستقلة، يهدف إلى تقريب القصص ووجهات النظر والمجتمعات من بعضها البعض.
 image: /assets/uploads/pexels-cmrcn-27988858.jpg
+image_size: medium
 ---
 ## A New Chapter for Independent Journalism
 
