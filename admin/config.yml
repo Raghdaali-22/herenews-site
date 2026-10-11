@@ -1,0 +1,67 @@
+
+backend:
+  name: github
+  repo: Raghdaali-22/herenews-site
+  branch: main
+  # Authentication will be configured in Step 3.
+
+site_url: https://herenews.net
+display_url: https://herenews.net
+logo_url: /favicon.png
+
+publish_mode: editorial_workflow
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+collections:
+  - name: "articles"
+    label: "Articles"
+    label_singular: "Article"
+    folder: "content/articles"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Author", name: "author", widget: "string", default: "Ali Gamal" }
+      - { label: "Publication Date", name: "date", widget: "datetime" }
+      - { label: "Summary", name: "description", widget: "text" }
+      - { label: "Cover Image", name: "image", widget: "image", required: false }
+      - { label: "Article", name: "body", widget: "markdown" }
+
+  - name: "documentaries"
+    label: "Documentaries & Videos"
+    folder: "content/documentaries"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Author", name: "author", widget: "string", default: "Ali Gamal" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Thumbnail", name: "image", widget: "image", required: false }
+      - { label: "Video URL", name: "video_url", widget: "string" }
+      - { label: "Additional Notes", name: "body", widget: "markdown", required: false }
+
+  - name: "audio"
+    label: "Audio Projects"
+    folder: "content/audio"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Author", name: "author", widget: "string", default: "Ali Gamal" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Cover Image", name: "image", widget: "image", required: false }
+      - { label: "Audio URL", name: "audio_url", widget: "string" }
+      - { label: "Transcript or Notes", name: "body", widget: "markdown", required: false }
