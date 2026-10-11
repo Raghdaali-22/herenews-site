@@ -1,9 +1,15 @@
 
+
 backend:
-  name: github
+  name: git-gateway
   repo: Raghdaali-22/herenews-site
   branch: main
-  # Authentication will be configured in Step 3.
+  auth_type: pkce
+  base_url: https://auth.decapbridge.com
+  auth_endpoint: /sites/5860bdf0-ee45-47bc-bca5-dfc0ae61760a/pkce
+  auth_token_endpoint: /sites/5860bdf0-ee45-47bc-bca5-dfc0ae61760a/token
+  gateway_url: https://gateway.decapbridge.com
+
 
 site_url: https://herenews.net
 display_url: https://herenews.net
