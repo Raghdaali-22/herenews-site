@@ -35,20 +35,22 @@ collections:
       - { label: "Author", name: "author", widget: "string", default: "Ali Gamal" }
       - { label: "Publication Date", name: "date", widget: "datetime" }
       - { label: "Summary", name: "description", widget: "text" }
+     
       - { label: "Cover Image", name: "image", widget: "image", required: false }
-      
-- label: "Cover Image Size"
-  name: "image_size"
-  widget: "select"
-  options:
-    - { label: "Small", value: "small" }
-    - { label: "Medium", value: "medium" }
-    - { label: "Large", value: "large" }
-    - { label: "Full Width", value: "full" }
-  default: "medium"
-  required: false
+
+      - label: "Cover Image Size"
+        name: "image_size"
+        widget: "select"
+        options:
+          - { label: "Small", value: "small" }
+          - { label: "Medium", value: "medium" }
+          - { label: "Large", value: "large" }
+          - { label: "Full Width", value: "full" }
+        default: "medium"
+        required: false
 
       - { label: "Article", name: "body", widget: "markdown" }
+
 
   - name: "documentaries"
     label: "Documentaries & Videos"
