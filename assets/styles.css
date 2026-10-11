@@ -350,5 +350,37 @@ footer{
   }
 }
 
+/* === ARTICLE IMAGE DISPLAY === */
+
+/* Keep images inside the article's reading area */
+article img,
+.article-content img,
+.article-body img {
+  display: block;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  margin: 24px auto;
+  border-radius: 8px;
+}
+
+/* Keep cover images elegant and proportional */
+article > img,
+.article-cover img {
+  display: block;
+  width: 100%;
+  max-height: 420px;
+  object-fit: contain;
+  object-position: center;
+}
+
+/* Prevent long content from stretching the page */
+article,
+.article-content,
+.article-body {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
   
 }
