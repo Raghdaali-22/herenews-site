@@ -1,24 +1,19 @@
 ---
 layout: layout.njk
 pagination:
-  data: collections.articles
+  data: collections.audio
   size: 1
   alias: post
-  addAllPagesToCollections: false
-permalink: "publications/articles/{{ post.fileSlug | slugify }}/index.html"
-eleventyComputed:
-  title: "{{ post.data.title }}"
-  description: "{{ post.data.description }}"
+permalink: "/publications/audio/{{ post.fileSlug | slugify }}/index.html"
 ---
+
 
 <article class="publication-article">
 
-  <p>
-    <a href="/publications/">← All publications</a>
-  </p>
+  <p><a href="/publications/">← All publications</a></p>
 
   <p class="small">
-    Article · {{ post.data.date | shortDate }}
+    Audio · {{ post.data.date | shortDate }}
   </p>
 
   <h1>{{ post.data.title | escape }}</h1>
@@ -28,7 +23,7 @@ eleventyComputed:
   </p>
 
   {% if post.data.image %}
-    <div class="publication-cover-wrapper cover-{{ post.data.image_size | default('medium') }}">
+    <div class="publication-cover-wrapper cover-medium">
       <img
         class="publication-cover"
         src="{{ post.data.image | escape }}"
@@ -39,6 +34,23 @@ eleventyComputed:
 
   {% if post.data.description %}
     <p class="lede">{{ post.data.description | escape }}</p>
+  {% endif %}
+
+  {% if post.data.audio_url %}
+    <section class="audio-player-section">
+      <h2>Listen to this recording</h2>
+
+      <audio controls preload="metadata">
+        <source src="{{ post.data.audio_url | escape }}" type="audio/mpeg">
+        Your browser does not support HTML audio.
+      </audio>
+
+      <p class="small">
+        <a href="{{ post.data.audio_url | escape }}" target="_blank" rel="noopener noreferrer">
+          Open audio file ↗
+        </a>
+      </p>
+    </section>
   {% endif %}
 
   <div class="publication-body">
