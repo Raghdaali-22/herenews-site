@@ -25,6 +25,7 @@ collections:
     folder: "content/articles"
     create: true
     slug: "{{slug}}"
+    preview_path: "/publications/articles/{{slug}}/"
     extension: "md"
     format: "frontmatter"
     fields:
@@ -32,7 +33,32 @@ collections:
       - { label: "Author", name: "author", widget: "string", default: "Ali Gamal" }
       - { label: "Publication Date", name: "date", widget: "datetime" }
       - { label: "Summary", name: "description", widget: "text" }
+      - label: "Primary Category"
+        name: "category"
+        widget: "select"
+        required: false
+        options: ["Politics", "Investigations", "History", "Society", "Culture", "Media", "Opinion", "Other"]
+      - label: "Tags"
+        name: "tags"
+        widget: "list"
+        required: false
+        field: { label: "Tag", name: "tag", widget: "string" }
+        hint: "Add topics for future search and filters; use consistent spelling."
+      - { label: "Series / Collection", name: "series", widget: "string", required: false }
+      - label: "Language"
+        name: "language"
+        widget: "select"
+        required: false
+        default: "bilingual"
+        options:
+          - { label: "Bilingual", value: "bilingual" }
+          - { label: "Arabic", value: "ar" }
+          - { label: "English", value: "en" }
+      - { label: "Feature on homepage (future use)", name: "featured", widget: "boolean", required: false, default: false }
+
       - { label: "Cover Image", name: "image", widget: "image", required: false }
+      - { label: "Cover Image Caption", name: "image_caption", widget: "text", required: false }
+      - { label: "Cover Image Credit", name: "image_credit", widget: "string", required: false }
       - label: "Cover Image Size"
         name: "image_size"
         widget: "select"
