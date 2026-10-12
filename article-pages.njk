@@ -34,6 +34,12 @@ eleventyComputed:
         src="{{ post.data.image | escape }}"
         alt="{{ post.data.title | escape }}"
       >
+      {% if post.data.image_caption or post.data.image_credit %}
+        <p class="publication-image-caption">
+          {{ post.data.image_caption | default('') | escape }}
+          {% if post.data.image_credit %}<span class="publication-image-credit">Photo: {{ post.data.image_credit | escape }}</span>{% endif %}
+        </p>
+      {% endif %}
     </div>
   {% endif %}
 
