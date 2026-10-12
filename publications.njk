@@ -9,13 +9,15 @@ permalink: /publications/index.html
 <div class="publication-grid">
 {% for item in allItems | sort(false, false, 'data.date') | reverse %}
 
+
 {% if item.inputPath.includes('/articles/') %}
   {% set itemUrl = "/publications/articles/" + (item.fileSlug | slugify) + "/" %}
 {% elif item.inputPath.includes('/documentaries/') %}
-  {% set itemUrl = "/publications/documentaries/" + item.fileSlug + "/" %}
+  {% set itemUrl = "/publications/documentaries/" + (item.fileSlug | slugify) + "/" %}
 {% else %}
-  {% set itemUrl = "/publications/audio/" + item.fileSlug + "/" %}
+  {% set itemUrl = "/publications/audio/" + (item.fileSlug | slugify) + "/" %}
 {% endif %}
+
 
 <article class="card publication-card">
 {% if item.data.image %}<a href="{{ itemUrl }}"><img src="{{ item.data.image | escape }}" alt="" loading="lazy"></a>{% endif %}
