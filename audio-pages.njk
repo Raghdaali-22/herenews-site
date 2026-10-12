@@ -5,7 +5,12 @@ pagination:
   size: 1
   alias: post
 permalink: "/publications/audio/{{ post.fileSlug | slugify }}/index.html"
+eleventyComputed:
+  title: "{{ post.data.title }}"
+  description: "{{ post.data.description }}"
 ---
+
+{% set audioSrc = post.data.audio_url or post.data.external_audio_url %}
 
 
 <article class="publication-article">
@@ -36,17 +41,17 @@ permalink: "/publications/audio/{{ post.fileSlug | slugify }}/index.html"
     <p class="lede">{{ post.data.description | escape }}</p>
   {% endif %}
 
-  {% if post.data.audio_url %}
+  {% if audioSrc %}
     <section class="audio-player-section">
       <h2>Listen to this recording</h2>
 
       <audio controls preload="metadata">
-        <source src="{{ post.data.audio_url | escape }}" type="audio/mpeg">
+        <source src="{{ audioSrc | escape }}" type="audio/mpeg">
         Your browser does not support HTML audio.
       </audio>
 
       <p class="small">
-        <a href="{{ post.data.audio_url | escape }}" target="_blank" rel="noopener noreferrer">
+        <a href="{{ audioSrc | escape }}" target="_blank" rel="noopener noreferrer">
           Open audio file ↗
         </a>
       </p>
