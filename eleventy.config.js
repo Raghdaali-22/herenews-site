@@ -7,9 +7,24 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("favicon.png");
   eleventyConfig.addPassthroughCopy("CNAME");
   eleventyConfig.addWatchTarget("./assets/");
-  for (const kind of ["articles", "documentaries", "audio"]) {
-    eleventyConfig.addCollection(kind, collection => collection.getFilteredByGlob(`./content/${kind}/*.md`).sort((a,b) => new Date(b.data.date || 0) - new Date(a.data.date || 0)));
-  }
+  
+for (const kind of ["articles", "documentaries", "audio"]) {
+  eleventyConfig.addCollection(kind, collection => {
+    const items = collection
+      .getFilteredByGlob(`./content/${kind}/*.md`)
+      .sort((a, b) =>
+        new Date(b.data.date || 0) - new Date(a.data.date || 0)
+      );
+
+    console.log(
+      `[HERE NEWS] ${kind}: ${items.length} items`,
+      items.map(item => item.inputPath)
+    );
+
+    return items;
+  });
+}
+
   eleventyConfig.addFilter("shortDate", value => {
     if (!value) return "";
     const d = new Date(value);
