@@ -451,3 +451,7 @@ article,
 }
 
  
+
+/* Editorial image captions */
+.publication-image-caption { font-size: .88rem; line-height: 1.55; color: #666; margin: 10px auto 0; text-align: left; }
+.publication-image-credit { display: inline; margin-left: .35em; font-style: italic; }
