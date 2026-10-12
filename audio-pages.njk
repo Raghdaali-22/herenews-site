@@ -5,12 +5,9 @@ pagination:
   data: collections.audio
   size: 1
   alias: post
-  addAllPagesToCollections: false
-permalink: "publications/audio/{{ post.fileSlug | slugify }}/index.html"
-eleventyComputed:
-  title: "{{ post.data.title }}"
-  description: "{{ post.data.description }}"
+permalink: "/publications/audio/{{ post.fileSlug | slugify }}/index.html"
 ---
+
 
 <article class="publication-article">
 
