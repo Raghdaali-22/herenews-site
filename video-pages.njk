@@ -4,7 +4,7 @@ pagination:
   data: collections.documentaries
   size: 1
   alias: post
-permalink: "/publications/documentaries/{{ post.fileSlug }}/index.html"
+permalink: "/publications/documentaries/{{ post.fileSlug | slugify }}/index.html"
 eleventyComputed:
   title: "{{ post.data.title }}"
   description: "{{ post.data.description }}"
