@@ -1,0 +1,8 @@
+html,body { background: #f5f2e8 !important; margin:0; }
+.here-preview { max-width: 850px; margin: 0 auto; padding: 36px 28px 80px; font-family: Georgia, 'Times New Roman', serif; color: #171717; }
+.here-preview h1 { font-family: Georgia, 'Times New Roman', serif; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.13; margin: 18px 0 24px; }
+.here-preview .lede { font-size: 1.18rem; line-height: 1.6; }
+.here-preview .publication-body { font-size: 1.1rem; line-height: 1.8; overflow-wrap: anywhere; }
+.here-preview .publication-body img { max-width:100%; height:auto; }
+.here-preview .publication-cover-wrapper { margin: 24px auto; }
+.here-preview .publication-image-caption { font-size: .85rem; color:#666; }
