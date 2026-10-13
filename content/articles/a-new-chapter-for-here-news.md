@@ -1,5 +1,5 @@
 ---
-title: A New Chapter for Here News | فصل جديد لهنا نيوز
+title: A New Chapter for Here News edit | فصل جديد لهنا نيوز
 slug: a-new-chapter-for-here-news
 date: 2026-10-11T13:30:00.000-04:00
 language: bilingual
