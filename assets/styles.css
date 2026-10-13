@@ -114,15 +114,24 @@ header{
   .nav{
     flex-direction: column;
     align-items: flex-start;
+    gap: 4px;
+    padding: 8px 0 4px;
   }
+  /* One swipeable row of links keeps the sticky header short on phones */
   .navlinks{
     width: 100%;
+    flex-wrap: nowrap;
     justify-content: flex-start;
-    gap: 10px;
+    gap: 16px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
   }
+  .navlinks::-webkit-scrollbar{ display: none; }
   .navlinks a{
-    font-size: 16px;
-    padding: 8px 2px;
+    font-size: 15px;
+    padding: 6px 0;
+    white-space: nowrap;
   }
 }
 
@@ -308,7 +317,7 @@ footer{
 
 .publication-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: 22px;
 }
 
@@ -658,3 +667,19 @@ article,
 .ad-slot--listing{ margin: 0; display:flex; }
 .ad-slot--listing .ad{ width:100%; box-shadow: var(--shadow); border-radius: var(--radius); padding: 22px; background: var(--panel); }
 .ad-slot--listing .ad-creative{ aspect-ratio: 16/9; object-fit: cover; }
+
+/* === PUBLICATIONS ON PHONES === */
+@media (max-width: 759px){
+  .publication-main{ padding-top: 24px; }
+  .publication-heading{ margin-bottom: 22px; }
+  .publication-heading h1{ font-size: 36px; }
+  .publication-grid{ gap: 16px; }
+  .publication-card{ padding: 16px; }
+  .publication-card img{ height: auto; aspect-ratio: 16 / 10; }
+  .publication-card .publication-meta{ margin-top: 4px; }
+  .publication-card h2{ font-size: 22px; }
+  .taxonomy-nav{ margin-top: -6px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-bottom: 4px; }
+  .taxonomy-nav::-webkit-scrollbar{ display: none; }
+  .taxonomy-nav .pill{ white-space: nowrap; }
+}
+.publication-card img, .featured-card img{ margin: 0; }
