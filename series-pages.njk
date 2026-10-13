@@ -1,0 +1,22 @@
+---
+layout: layout.njk
+pagination:
+  data: collections.series
+  size: 1
+  alias: series
+  addAllPagesToCollections: false
+permalink: "publications/series/{{ series | pubSlug }}/index.html"
+eleventyComputed:
+  title: "{{ series.data.title }}"
+  description: "{{ series.data.description }}"
+---
+{% set activeTaxonomy = 'series' %}
+<section class="publication-heading series-heading">
+  <span class="kicker"><span class="dot"></span> Series</span>
+  <h1>{{ series.data.title | escape }}</h1>
+  {% for para in series.data.description | default('') | paragraphs %}<p class="lede">{{ para | escape }}</p>{% endfor %}
+  {% if series.data.image %}<img class="publication-cover series-cover" src="{{ series.data.image | escape }}" alt="">{% endif %}
+</section>
+{% include "taxonomy-nav.njk" %}
+{% set listingItems = collections.publications | inSeries(series | pubSlug) %}{% set listingContext = { general: true } %}
+{% include "publication-list.njk" %}

@@ -3,12 +3,13 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/assets/styles.css">
+  <script src="/assets/ads.js" defer></script>
   <title>{{ title | default("Publications") | escape }} — Here News</title>
   <meta name="description" content="{{ description | default('Independent reporting, documentaries and audio from Here News.') | escape }}">
 </head>
 <body>
 <header><div class="container nav"><a class="brand" href="/index.html">Here News</a>
-<nav class="navlinks" aria-label="Primary navigation"><a href="/index.html">Home</a><a href="/publications/">Publications</a><a href="/about.html">About Us</a><a href="/project.html">Scientific Project</a><a href="/admin/">Editorial Login</a></nav></div></header>
+<nav class="navlinks" aria-label="Primary navigation"><a href="/index.html">Home</a><a href="/publications/">Publications</a><a href="/about.html">About Us</a><a href="/project.html">Scientific Project</a><a href="/admin/" target="_blank" rel="noopener">Editorial Login</a></nav></div></header>
 <main class="container publication-main">{{ content | safe }}</main>
 <footer><div class="container footerGrid"><div>© Here News</div><div><a href="/publications/">Publications</a> · <a href="/about.html">About</a></div></div></footer>
 </body></html>

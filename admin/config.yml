@@ -28,45 +28,84 @@ collections:
     folder: "content/articles"
     create: true
     slug: "{{fields.slug}}"
-    preview_path: "publications/articles/{{slug}}/"
+    # Must match the site's page URL (built from the same "URL name" field).
+    preview_path: "publications/articles/{{fields.slug}}/"
     extension: "md"
     format: "frontmatter"
+    summary: "{{title}} — {{category}}"
+    sortable_fields: ["date", "title", "category"]
+    view_groups:
+      - { label: "Category", field: "category" }
+      - { label: "Language", field: "language" }
     fields:
+      # ---- Headline ----
       - { label: "Title", name: "title", widget: "string" }
+      - label: "Subtitle"
+        name: "subtitle"
+        widget: "string"
+        required: false
+        hint: "One line shown directly beneath the headline."
       - label: "URL name (English letters, numbers, dashes)"
         name: "slug"
         widget: "string"
-        hint: "Used in the web address, e.g. my-first-story. Lowercase English only, even for Arabic titles."
+        hint: "Used in the web address, e.g. my-first-story. Lowercase English only, even for Arabic titles. Changing it later changes the article's link."
         pattern: ["^[a-z0-9]+(?:-[a-z0-9]+)*$", "Use lowercase English letters, numbers and single dashes only (no spaces)."]
-      - { label: "Author", name: "author", widget: "string", default: "Ali Gamal" }
       - { label: "Publication Date", name: "date", widget: "datetime" }
-      - { label: "Summary", name: "description", widget: "text" }
+      - label: "Language"
+        name: "language"
+        widget: "select"
+        default: "bilingual"
+        hint: "Arabic articles are laid out right-to-left. Bilingual articles align each paragraph by its own language."
+        options:
+          - { label: "Bilingual (English + Arabic)", value: "bilingual" }
+          - { label: "Arabic", value: "ar" }
+          - { label: "English", value: "en" }
+      - { label: "Summary", name: "description", widget: "text", hint: "Shown on listings and as the opening paragraph. Leave a blank line between English and Arabic." }
+
+      # ---- Organization ----
       - label: "Primary Category"
         name: "category"
         widget: "select"
         required: false
         options: ["Politics", "Investigations", "History", "Society", "Culture", "Media", "Opinion", "Other"]
       - label: "Tags"
-        name: "tags"
+        name: "topics"
         widget: "list"
         required: false
+        allow_add: true
         field: { label: "Tag", name: "tag", widget: "string" }
-        hint: "Add topics for future search and filters; use consistent spelling."
-      - { label: "Series / Collection", name: "series", widget: "string", required: false }
-      - label: "Language"
-        name: "language"
-        widget: "select"
+        hint: "Specific topics, e.g. Egypt, Elections, Press Freedom. Reuse the exact same spelling each time — tags power search, filtering and ad matching."
+      - label: "Series / Collection"
+        name: "series"
+        widget: "relation"
+        collection: "series"
+        value_field: "slug"
+        search_fields: ["title"]
+        display_fields: ["title"]
         required: false
-        default: "bilingual"
-        options:
-          - { label: "Bilingual", value: "bilingual" }
-          - { label: "Arabic", value: "ar" }
-          - { label: "English", value: "en" }
-      - { label: "Feature on homepage (future use)", name: "featured", widget: "boolean", required: false, default: false }
+        hint: "Create the series first under “Series & Collections” (and publish it)."
+      - { label: "Part number in series", name: "series_order", widget: "number", value_type: "int", min: 1, required: false }
+      - { label: "Feature on homepage", name: "featured", widget: "boolean", required: false, default: false, hint: "The three most recent featured stories appear on the homepage." }
 
+      # ---- Attribution ----
+      - { label: "Author", name: "author", widget: "string", default: "Ali Gamal" }
+      - { label: "Source / originally published by", name: "source_name", widget: "string", required: false, hint: "e.g. Al-Ahram, Reuters. Leave empty for original Here News reporting." }
+      - { label: "Source link", name: "source_url", widget: "string", required: false, pattern: ["^https?://", "Start with http:// or https://"] }
+      - label: "Additional credits"
+        name: "credits"
+        widget: "list"
+        required: false
+        summary: "{{fields.role}}: {{fields.name}}"
+        hint: "e.g. Translation, Research, Editing, Photography."
+        fields:
+          - { label: "Role", name: "role", widget: "string" }
+          - { label: "Name", name: "name", widget: "string" }
+
+      # ---- Cover image ----
       - { label: "Cover Image", name: "image", widget: "image", required: false }
+      - { label: "Cover Image Description (for screen readers)", name: "image_alt", widget: "string", required: false }
       - { label: "Cover Image Caption", name: "image_caption", widget: "text", required: false }
-      - { label: "Cover Image Credit", name: "image_credit", widget: "string", required: false }
+      - { label: "Cover Image Credit", name: "image_credit", widget: "string", required: false, hint: "e.g. Photo: Jane Doe / Pexels" }
       - label: "Cover Image Size"
         name: "image_size"
         widget: "select"
@@ -77,14 +116,202 @@ collections:
           - { label: "Full Width", value: "full" }
         default: "medium"
         required: false
-      - { label: "Article", name: "body", widget: "markdown" }
+
+      # ---- Story ----
+      - { label: "Article text", name: "body", widget: "markdown", required: false, hint: "The main text. To place images, galleries, quotes or media between paragraphs, use Content Blocks below instead (they appear after this text)." }
+      - label: "Content Blocks"
+        name: "blocks"
+        widget: "list"
+        required: false
+        hint: "Build the story from blocks. Drag blocks to reorder them; they appear on the site in this order."
+        types:
+          - label: "Text"
+            name: "text"
+            widget: "object"
+            summary: "{{fields.body | truncate(60)}}"
+            fields:
+              - { label: "Text", name: "body", widget: "markdown" }
+          - label: "Section heading"
+            name: "heading"
+            widget: "object"
+            summary: "{{fields.text}}"
+            fields:
+              - { label: "Heading", name: "text", widget: "string" }
+              - { label: "Level", name: "level", widget: "select", default: "h2", options: [{ label: "Section heading", value: "h2" }, { label: "Sub-heading", value: "h3" }] }
+          - label: "Image"
+            name: "image"
+            widget: "object"
+            summary: "{{fields.caption}}"
+            fields:
+              - { label: "Image", name: "image", widget: "image" }
+              - { label: "Description (for screen readers)", name: "alt", widget: "string", required: false }
+              - { label: "Caption", name: "caption", widget: "text", required: false }
+              - { label: "Photo credit", name: "credit", widget: "string", required: false }
+              - label: "Size"
+                name: "size"
+                widget: "select"
+                default: "large"
+                options:
+                  - { label: "Small", value: "small" }
+                  - { label: "Medium", value: "medium" }
+                  - { label: "Large", value: "large" }
+                  - { label: "Full Width", value: "full" }
+              - label: "Alignment"
+                name: "align"
+                widget: "select"
+                default: "center"
+                hint: "Left/Right wrap the text around Small and Medium images on wide screens."
+                options:
+                  - { label: "Left", value: "left" }
+                  - { label: "Center", value: "center" }
+                  - { label: "Right", value: "right" }
+          - label: "Gallery (2–4 images)"
+            name: "gallery"
+            widget: "object"
+            summary: "Gallery — {{fields.caption}}"
+            fields:
+              - label: "Images"
+                name: "images"
+                widget: "list"
+                min: 2
+                max: 4
+                hint: "2 images = side by side, 3 = one large + two, 4 = 2 × 2 grid."
+                fields:
+                  - { label: "Image", name: "image", widget: "image" }
+                  - { label: "Description (for screen readers)", name: "alt", widget: "string", required: false }
+                  - { label: "Caption", name: "caption", widget: "string", required: false }
+                  - { label: "Photo credit", name: "credit", widget: "string", required: false }
+              - { label: "Gallery caption", name: "caption", widget: "text", required: false }
+              - { label: "Gallery credit", name: "credit", widget: "string", required: false }
+          - label: "Pull quote"
+            name: "quote"
+            widget: "object"
+            summary: "“{{fields.text | truncate(50)}}”"
+            fields:
+              - { label: "Quote", name: "text", widget: "text" }
+              - { label: "Attribution", name: "attribution", widget: "string", required: false }
+          - label: "Divider"
+            name: "divider"
+            widget: "object"
+            fields:
+              - { label: "Style", name: "style", widget: "select", default: "line", options: [{ label: "Thin line", value: "line" }, { label: "Ornament ◆ ◆ ◆", value: "ornament" }] }
+          - label: "Video"
+            name: "video"
+            widget: "object"
+            summary: "Video — {{fields.url}}"
+            fields:
+              - { label: "Video link (YouTube or Vimeo)", name: "url", widget: "string", pattern: ["^https?://", "Paste the full link, starting with https://"] }
+              - { label: "Caption", name: "caption", widget: "string", required: false }
+          - label: "Audio"
+            name: "audio"
+            widget: "object"
+            summary: "Audio — {{fields.title}}"
+            fields:
+              - { label: "Title", name: "title", widget: "string", required: false }
+              - { label: "Audio file (MP3)", name: "file", widget: "file", required: false, media_folder: "/assets/uploads/audio", public_folder: "/assets/uploads/audio" }
+              - { label: "…or external MP3 link", name: "url", widget: "string", required: false }
+              - { label: "Caption", name: "caption", widget: "string", required: false }
+
+      # ---- Advertising ----
+      - { label: "Show advertisements on this article", name: "ads", widget: "boolean", default: true, required: false, hint: "Turn off for an ad-free article." }
+      - label: "Sponsor (manual selection)"
+        name: "sponsor"
+        widget: "relation"
+        collection: "advertisements"
+        value_field: "slug"
+        search_fields: ["title", "advertiser"]
+        display_fields: ["advertiser", "title"]
+        required: false
+        hint: "Optional. Shows only this campaign on the article, overriding automatic matching."
+
+  - name: "series"
+    label: "Series & Collections"
+    label_singular: "Series"
+    folder: "content/series"
+    create: true
+    slug: "{{fields.slug}}"
+    preview_path: "publications/series/{{fields.slug}}/"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Series title", name: "title", widget: "string" }
+      - label: "URL name (English letters, numbers, dashes)"
+        name: "slug"
+        widget: "string"
+        pattern: ["^[a-z0-9]+(?:-[a-z0-9]+)*$", "Use lowercase English letters, numbers and single dashes only (no spaces)."]
+      - { label: "Description", name: "description", widget: "text", required: false }
+      - { label: "Cover Image", name: "image", widget: "image", required: false }
+
+  - name: "advertisements"
+    label: "Advertisements"
+    label_singular: "Advertisement"
+    folder: "content/ads"
+    create: true
+    slug: "{{fields.slug}}"
+    extension: "md"
+    format: "frontmatter"
+    summary: "{{advertiser}} — {{title}}"
+    sortable_fields: ["title", "advertiser", "start", "end", "priority"]
+    view_filters:
+      - { label: "Enabled", field: "active", pattern: true }
+      - { label: "Disabled", field: "active", pattern: false }
+    fields:
+      - { label: "Campaign name (internal)", name: "title", widget: "string" }
+      - label: "ID (English letters, numbers, dashes)"
+        name: "slug"
+        widget: "string"
+        pattern: ["^[a-z0-9]+(?:-[a-z0-9]+)*$", "Use lowercase English letters, numbers and single dashes only (no spaces)."]
+      - { label: "Enabled", name: "active", widget: "boolean", default: true, hint: "Switch off to pause the campaign immediately (after publishing)." }
+      - { label: "Advertiser name", name: "advertiser", widget: "string", hint: "Shown to readers as “Sponsored by …”." }
+      - { label: "Destination URL", name: "url", widget: "string", pattern: ["^https?://", "Start with http:// or https://"] }
+      - { label: "Ad image (creative)", name: "image", widget: "image", hint: "Landscape images work best everywhere (e.g. 1200 × 628)." }
+      - { label: "Image description (for screen readers)", name: "image_alt", widget: "string", required: false }
+      - { label: "Headline", name: "headline", widget: "string", required: false }
+      - { label: "Short text", name: "text", widget: "text", required: false }
+      - { label: "Campaign start", name: "start", widget: "datetime", required: false, hint: "Empty = starts as soon as it's published." }
+      - { label: "Campaign end", name: "end", widget: "datetime", required: false, hint: "Empty = runs until switched off." }
+      - label: "Allowed placements"
+        name: "placements"
+        widget: "select"
+        multiple: true
+        min: 1
+        default: ["in-article", "sidebar", "bottom", "listing"]
+        options:
+          - { label: "Inside articles (after the 3rd paragraph)", value: "in-article" }
+          - { label: "Article sidebar", value: "sidebar" }
+          - { label: "Bottom of articles", value: "bottom" }
+          - { label: "Publication listings", value: "listing" }
+      - label: "Target categories"
+        name: "categories"
+        widget: "select"
+        multiple: true
+        required: false
+        options: ["Politics", "Investigations", "History", "Society", "Culture", "Media", "Opinion", "Other"]
+        hint: "Leave categories and tags empty to run on all content."
+      - label: "Target tags"
+        name: "topics"
+        widget: "list"
+        required: false
+        field: { label: "Tag", name: "tag", widget: "string" }
+        hint: "Use the same spelling as the article tags."
+      - label: "Language targeting"
+        name: "languages"
+        widget: "select"
+        multiple: true
+        required: false
+        options:
+          - { label: "English", value: "en" }
+          - { label: "Arabic", value: "ar" }
+        hint: "Empty = all languages. Bilingual articles match English or Arabic ads."
+      - { label: "Priority", name: "priority", widget: "number", value_type: "int", default: 0, required: false, hint: "When several ads fit the same spot, the highest priority wins." }
+      - { label: "Internal notes", name: "notes", widget: "text", required: false }
 
   - name: "documentaries"
     label: "Documentaries & Videos"
     folder: "content/documentaries"
     create: true
     slug: "{{fields.slug}}"
-    preview_path: "publications/documentaries/{{slug}}/"
+    preview_path: "publications/documentaries/{{fields.slug}}/"
     extension: "md"
     format: "frontmatter"
     fields:
@@ -95,6 +322,24 @@ collections:
         hint: "Used in the web address, e.g. my-first-story. Lowercase English only, even for Arabic titles."
         pattern: ["^[a-z0-9]+(?:-[a-z0-9]+)*$", "Use lowercase English letters, numbers and single dashes only (no spaces)."]
       - { label: "Author", name: "author", widget: "string", default: "Ali Gamal" }
+      - { label: "Subtitle", name: "subtitle", widget: "string", required: false }
+      - label: "Language"
+        name: "language"
+        widget: "select"
+        default: "bilingual"
+        options:
+          - { label: "Bilingual (English + Arabic)", value: "bilingual" }
+          - { label: "Arabic", value: "ar" }
+          - { label: "English", value: "en" }
+      - { label: "Primary Category", name: "category", widget: "select", required: false, options: ["Politics", "Investigations", "History", "Society", "Culture", "Media", "Opinion", "Other"] }
+      - label: "Tags"
+        name: "topics"
+        widget: "list"
+        required: false
+        field: { label: "Tag", name: "tag", widget: "string" }
+      - { label: "Feature on homepage", name: "featured", widget: "boolean", required: false, default: false }
+      - { label: "Source / originally published by", name: "source_name", widget: "string", required: false }
+      - { label: "Source link", name: "source_url", widget: "string", required: false }
       - { label: "Date", name: "date", widget: "datetime" }
       - { label: "Description", name: "description", widget: "text" }
       - { label: "Thumbnail", name: "image", widget: "image", required: false }
@@ -106,7 +351,7 @@ collections:
     folder: "content/audio"
     create: true
     slug: "{{fields.slug}}"
-    preview_path: "publications/audio/{{slug}}/"
+    preview_path: "publications/audio/{{fields.slug}}/"
     extension: "md"
     format: "frontmatter"
     fields:
@@ -117,6 +362,24 @@ collections:
         hint: "Used in the web address, e.g. my-first-story. Lowercase English only, even for Arabic titles."
         pattern: ["^[a-z0-9]+(?:-[a-z0-9]+)*$", "Use lowercase English letters, numbers and single dashes only (no spaces)."]
       - { label: "Author", name: "author", widget: "string", default: "Ali Gamal" }
+      - { label: "Subtitle", name: "subtitle", widget: "string", required: false }
+      - label: "Language"
+        name: "language"
+        widget: "select"
+        default: "bilingual"
+        options:
+          - { label: "Bilingual (English + Arabic)", value: "bilingual" }
+          - { label: "Arabic", value: "ar" }
+          - { label: "English", value: "en" }
+      - { label: "Primary Category", name: "category", widget: "select", required: false, options: ["Politics", "Investigations", "History", "Society", "Culture", "Media", "Opinion", "Other"] }
+      - label: "Tags"
+        name: "topics"
+        widget: "list"
+        required: false
+        field: { label: "Tag", name: "tag", widget: "string" }
+      - { label: "Feature on homepage", name: "featured", widget: "boolean", required: false, default: false }
+      - { label: "Source / originally published by", name: "source_name", widget: "string", required: false }
+      - { label: "Source link", name: "source_url", widget: "string", required: false }
       - { label: "Date", name: "date", widget: "datetime" }
       - { label: "Description", name: "description", widget: "text" }
       - { label: "Cover Image", name: "image", widget: "image", required: false }

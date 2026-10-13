@@ -5,50 +5,97 @@ pagination:
   size: 1
   alias: post
   addAllPagesToCollections: false
-permalink: "publications/articles/{{ post.fileSlug | slugify }}/index.html"
+permalink: "publications/articles/{{ post | pubSlug }}/index.html"
 eleventyComputed:
   title: "{{ post.data.title }}"
-  description: "{{ post.data.description }}"
+  description: "{{ post.data.subtitle or post.data.description }}"
 ---
+{%- set d = post.data %}
+{%- set lang = d | pubLang %}
+{%- set adContext = { category: d.category, topics: d.topics, language: lang, ads: d.ads, sponsor: d.sponsor } %}
+{%- set seriesItem = collections.series | findSeries(d.series) %}
+{%- set seriesItems = collections.articles | inSeries(d.series) %}
+{%- set sidebarAds = collections.advertisements | adsFor(adContext, 'sidebar') %}
+{%- set hasAside = sidebarAds.length or (seriesItem and seriesItems.length > 1) %}
 
-<article class="publication-article">
+<div class="article-layout{% if hasAside %} has-aside{% endif %}">
+<article class="publication-article lang-{{ lang }}"{% if lang == 'ar' %} lang="ar" dir="rtl"{% elif lang == 'en' %} lang="en"{% endif %}>
 
-  <p>
-    <a href="/publications/">← All publications</a>
+  <p dir="{% if lang == 'ar' %}rtl{% else %}auto{% endif %}" class="article-back"><a href="/publications/">{% if lang == 'ar' %}→{% else %}←{% endif %} {{ 'all' | label(lang) }}</a></p>
+
+  <p dir="{% if lang == 'ar' %}rtl{% else %}auto{% endif %}" class="small article-meta">
+    {%- if d.category %}<a class="category-link" href="/publications/category/{{ d.category | taxonomySlug }}/">{{ d.category | escape }}</a> · {% endif -%}
+    {{ post | kindLabel(lang) }} · <time datetime="{{ d.date | isoDate }}">{{ d.date | shortDate(lang) }}</time>
   </p>
 
-  <p class="small">
-    Article · {{ post.data.date | shortDate }}
-  </p>
+  {%- if seriesItem %}
+  <p dir="{% if lang == 'ar' %}rtl{% else %}auto{% endif %}" class="article-series">{{ 'series' | label(lang) }}: <a href="/publications/series/{{ seriesItem | pubSlug }}/">{{ seriesItem.data.title | escape }}</a>{% if d.series_order %} · {{ 'part' | label(lang) }} {{ d.series_order }}{% endif %}</p>
+  {%- endif %}
 
-  <h1>{{ post.data.title | escape }}</h1>
+  <h1>{{ d.title | escape }}</h1>
 
-  <p class="small">
-    By {{ post.data.author | default('Here News') | escape }}
-  </p>
+  {%- if d.subtitle %}
+  <p class="article-subtitle">{{ d.subtitle | escape }}</p>
+  {%- endif %}
 
-  {% if post.data.image %}
-    <div class="publication-cover-wrapper cover-{{ post.data.image_size | default('medium') }}">
-      <img
-        class="publication-cover"
-        src="{{ post.data.image | escape }}"
-        alt="{{ post.data.title | escape }}"
-      >
-      {% if post.data.image_caption or post.data.image_credit %}
-        <p class="publication-image-caption">
-          {{ post.data.image_caption | default('') | escape }}
-          {% if post.data.image_credit %}<span class="publication-image-credit">Photo: {{ post.data.image_credit | escape }}</span>{% endif %}
-        </p>
+  {% include "byline.njk" %}
+
+  {% if d.image %}
+    <figure class="publication-cover-wrapper cover-{{ d.image_size | default('medium') }}">
+      <img class="publication-cover" src="{{ d.image | escape }}" alt="{{ d.image_alt | default(d.title) | escape }}">
+      {% if d.image_caption or d.image_credit %}
+        <figcaption class="publication-image-caption">
+          {{ d.image_caption | default('') | escape }}
+          {% if d.image_credit %}<span class="publication-image-credit">{{ d.image_credit | escape }}</span>{% endif %}
+        </figcaption>
       {% endif %}
-    </div>
+    </figure>
   {% endif %}
 
-  {% if post.data.description %}
-    <p class="lede">{{ post.data.description | escape }}</p>
-  {% endif %}
+  {% for para in d.description | default('') | paragraphs %}
+    <p class="lede">{{ para | escape }}</p>
+  {% endfor %}
 
+  {%- set inArticleAd %}{% set adSlot = 'in-article' %}{% set adLang = lang %}{% set adList = collections.advertisements | adsFor(adContext, 'in-article', 3) %}{% include "ad-slot.njk" %}{% endset %}
+  {%- set articleHtml %}{{ post.templateContent | safe }}{% set blocks = d.blocks %}{% include "article-blocks.njk" %}{% endset %}
   <div class="publication-body">
-    {{ post.templateContent | safe }}
+    {{ articleHtml | injectAfterParagraph(3, inArticleAd) | safe }}
   </div>
 
+  {%- set credits = d.credits | asList %}
+  {%- if credits.length or d.source_name %}
+  <dl class="article-credits">
+    {%- if d.source_name %}
+    <dt>{{ 'source' | label(lang) }}</dt>
+    <dd>{% if d.source_url %}<a href="{{ d.source_url | escape }}" target="_blank" rel="noopener noreferrer">{{ d.source_name | escape }}</a>{% else %}{{ d.source_name | escape }}{% endif %}</dd>
+    {%- endif %}
+    {%- for credit in credits %}{% if credit.name %}
+    <dt>{{ credit.role | default('credits' | label(lang)) | escape }}</dt>
+    <dd>{{ credit.name | escape }}</dd>
+    {%- endif %}{% endfor %}
+  </dl>
+  {%- endif %}
+
+  {% include "item-tags.njk" %}
+
+  {% set adSlot = 'bottom' %}{% set adLang = lang %}{% set adList = collections.advertisements | adsFor(adContext, 'bottom', 3) %}{% include "ad-slot.njk" %}
+
 </article>
+
+{%- if hasAside %}
+<aside class="article-aside">
+  {% set adSlot = 'sidebar' %}{% set adLang = lang %}{% set adList = sidebarAds %}{% include "ad-slot.njk" %}
+  {%- if seriesItem and seriesItems.length > 1 %}
+  <section class="card series-box">
+    <p class="small">{{ 'moreInSeries' | label(lang) }}</p>
+    <h2><a href="/publications/series/{{ seriesItem | pubSlug }}/">{{ seriesItem.data.title | escape }}</a></h2>
+    <ol>
+      {%- for item in seriesItems %}
+      <li>{% if (item | pubUrl) == (post | pubUrl) %}<strong>{{ item.data.title | escape }}</strong>{% else %}<a href="{{ item | pubUrl }}">{{ item.data.title | escape }}</a>{% endif %}</li>
+      {%- endfor %}
+    </ol>
+  </section>
+  {%- endif %}
+</aside>
+{%- endif %}
+</div>

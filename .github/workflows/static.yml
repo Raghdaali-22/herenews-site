@@ -3,6 +3,10 @@ on:
   push:
     branches: ["main"]
   workflow_dispatch:
+  # Daily rebuild so expired ad campaigns drop out of the pages
+  # (start/end dates are also applied in the browser by assets/ads.js).
+  schedule:
+    - cron: "17 4 * * *"
 permissions:
   contents: read
   pages: write

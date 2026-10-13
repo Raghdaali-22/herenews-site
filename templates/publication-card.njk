@@ -1,0 +1,15 @@
+{#- One publication card. Expects: item -#}
+{%- set itemUrl = item | pubUrl %}
+{%- set itemLang = item.data | pubLang %}
+<article class="card publication-card"{% if itemLang == 'ar' %} lang="ar" dir="rtl"{% endif %}>
+{% if item.data.image %}<a href="{{ itemUrl }}"><img src="{{ item.data.image | escape }}" alt="" loading="lazy"></a>{% endif %}
+<p dir="{% if itemLang == 'ar' %}rtl{% else %}auto{% endif %}" class="small publication-meta">
+  {%- if item.data.category %}<a class="category-link" href="/publications/category/{{ item.data.category | taxonomySlug }}/">{{ item.data.category | escape }}</a> · {% endif -%}
+  {{ item | kindLabel(itemLang) }} · {{ item.data.date | shortDate(itemLang) }}
+</p>
+<h2><a href="{{ itemUrl }}">{{ item.data.title | escape }}</a></h2>
+{% if item.data.subtitle %}<p class="publication-card-subtitle">{{ item.data.subtitle | escape }}</p>{% endif %}
+{% for para in item.data.description | default('') | paragraphs %}<p>{{ para | escape }}</p>{% endfor %}
+<p class="small">{{ 'by' | label(itemLang) }} {{ item.data.author | default('Here News') | escape }}</p>
+<a class="publication-read" href="{{ itemUrl }}">{{ 'read' | label(itemLang) }}</a>
+</article>

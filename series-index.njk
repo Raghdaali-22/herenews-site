@@ -1,0 +1,22 @@
+---
+layout: layout.njk
+title: Series
+permalink: /publications/series/index.html
+---
+{% set activeTaxonomy = 'series' %}
+<section class="publication-heading"><span class="kicker"><span class="dot"></span> Collections</span><h1>Series</h1><p class="lede">Ongoing reporting and collected stories from Here News.</p></section>
+{% include "taxonomy-nav.njk" %}
+{% if collections.series.length %}
+<div class="publication-grid">
+{%- for series in collections.series %}
+{%- set count = (collections.publications | inSeries(series | pubSlug)).length %}
+<article class="card publication-card">
+{% if series.data.image %}<a href="/publications/series/{{ series | pubSlug }}/"><img src="{{ series.data.image | escape }}" alt="" loading="lazy"></a>{% endif %}
+<p class="small">Series · {{ count }} {% if count == 1 %}story{% else %}stories{% endif %}</p>
+<h2><a href="/publications/series/{{ series | pubSlug }}/">{{ series.data.title | escape }}</a></h2>
+{% for para in series.data.description | default('') | paragraphs %}<p>{{ para | escape }}</p>{% endfor %}
+<a class="publication-read" href="/publications/series/{{ series | pubSlug }}/">View series →</a>
+</article>
+{%- endfor %}
+</div>
+{% else %}<div class="card"><p>Series will appear here once they are created in the editor.</p></div>{% endif %}

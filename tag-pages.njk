@@ -1,0 +1,16 @@
+---
+layout: layout.njk
+pagination:
+  data: collections.tagList
+  size: 1
+  alias: group
+  addAllPagesToCollections: false
+permalink: "publications/tag/{{ group.slug }}/index.html"
+eleventyComputed:
+  title: "{{ group.name }}"
+  description: "Here News publications tagged {{ group.name }}."
+---
+<section class="publication-heading"><span class="kicker"><span class="dot"></span> Tag</span><h1>{{ group.name | escape }}</h1></section>
+{% include "taxonomy-nav.njk" %}
+{% set listingItems = group.items %}{% set listingContext = { topics: [group.name] } %}
+{% include "publication-list.njk" %}

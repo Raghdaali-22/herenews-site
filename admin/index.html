@@ -8,6 +8,20 @@
   <title>Here News | Editorial Dashboard</title>
 </head>
 <body>
+ <script>
+  // Open links that leave the editor ("View Live", the site link, external
+  // pages) in a new tab, so the editor itself stays open.
+  document.addEventListener('click', function (event) {
+    var link = event.target.closest && event.target.closest('a[href]');
+    if (!link) return;
+    var url;
+    try { url = new URL(link.getAttribute('href'), window.location.href); } catch (e) { return; }
+    if (url.protocol !== 'http:' && url.protocol !== 'https:') return;
+    if (url.origin === window.location.origin && url.pathname.indexOf('/admin') === 0) return;
+    link.setAttribute('target', '_blank');
+    link.setAttribute('rel', 'noopener noreferrer');
+  }, true);
+ </script>
  <script src="https://unpkg.com/decap-cms@^3.8.3/dist/decap-cms.js"></script>
  <script src="/admin/preview.js"></script>
 </body>
