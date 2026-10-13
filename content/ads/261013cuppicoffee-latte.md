@@ -14,6 +14,5 @@ placements:
   - in-article
   - sidebar
   - bottom
-  - listing
 priority: 0
 ---
