@@ -1,16 +1,26 @@
 ---
 title: A New Chapter for Here News | فصل جديد لهنا نيوز
 slug: a-new-chapter-for-here-news
-author: Ali Gamal
 date: 2026-10-11T13:30:00.000-04:00
+language: bilingual
 description: >-
   Here News is exploring a new approach to independent journalism, bringing
   stories, perspectives, and communities closer together.
 
 
   تستكشف منصة هنا نيوز نهجًا جديدًا للصحافة المستقلة، يهدف إلى تقريب القصص ووجهات النظر والمجتمعات من بعضها البعض.
+featured: true
+author: Ali Gamal
 image: /assets/uploads/pexels-cmrcn-27988858.jpg
+image_alt: 3 people reading newspaper
+image_credit: Pixabay
 image_size: full
+blocks:
+  - type: audio
+    file: /assets/uploads/audio/leberch-documentary-cinematic-594954.mp3
+    caption: '"Soundbite...."'
+    title: وقال
+ads: false
 ---
 ## A New Chapter for Independent Journalism
 
