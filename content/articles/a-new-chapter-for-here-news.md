@@ -20,7 +20,8 @@ blocks:
     file: /assets/uploads/audio/leberch-documentary-cinematic-594954.mp3
     caption: '"Soundbite...."'
     title: وقال
-ads: false
+ads: true
+sponsor: 261013cuppicoffee-latte
 ---
 ## A New Chapter for Independent Journalism
 
