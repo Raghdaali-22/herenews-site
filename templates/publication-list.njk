@@ -1,0 +1,12 @@
+{#- Grid of publication cards with a sponsored listing slot. Expects: listingItems, listingContext -#}
+{%- set listingAds = collections.advertisements | adsFor(listingContext, 'listing', 3) %}
+{% if listingItems.length %}
+<div class="publication-grid">
+{%- for item in listingItems %}
+{% include "publication-card.njk" %}
+{%- if loop.index == 3 or (loop.last and loop.length < 3) %}
+{% set adSlot = 'listing' %}{% set adLang = 'en' %}{% set adList = listingAds %}{% include "ad-slot.njk" %}
+{%- endif %}
+{%- endfor %}
+</div>
+{% else %}<div class="card"><p>Publications will appear here as they are published.</p></div>{% endif %}

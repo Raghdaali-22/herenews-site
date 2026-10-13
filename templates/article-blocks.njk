@@ -1,0 +1,58 @@
+{#- Renders the reorderable content blocks of an article, in the order the editor chose. Expects: blocks -#}
+{%- for block in blocks %}
+{%- if block.type == 'text' %}
+{{ block.body | markdown | safe }}
+{%- elif block.type == 'heading' and block.text %}
+{%- if block.level == 'h3' %}
+<h3 class="block-heading">{{ block.text | escape }}</h3>
+{%- else %}
+<h2 class="block-heading">{{ block.text | escape }}</h2>
+{%- endif %}
+{%- elif block.type == 'image' and block.image %}
+<figure class="block-image size-{{ block.size | default('large') }} align-{{ block.align | default('center') }}">
+  <img src="{{ block.image | escape }}" alt="{{ block.alt | default(block.caption) | default('') | escape }}" loading="lazy">
+  {%- if block.caption or block.credit %}
+  <figcaption>{{ block.caption | default('') | escape }}{% if block.credit %} <span class="credit">{{ block.credit | escape }}</span>{% endif %}</figcaption>
+  {%- endif %}
+</figure>
+{%- elif block.type == 'gallery' and block.images and block.images.length %}
+<figure class="block-gallery gallery-{{ block.images.length }}">
+  <div class="gallery-grid">
+    {%- for img in block.images %}{% if img.image %}
+    <figure class="gallery-item">
+      <img src="{{ img.image | escape }}" alt="{{ img.alt | default(img.caption) | default('') | escape }}" loading="lazy">
+      {%- if img.caption or img.credit %}
+      <figcaption>{{ img.caption | default('') | escape }}{% if img.credit %} <span class="credit">{{ img.credit | escape }}</span>{% endif %}</figcaption>
+      {%- endif %}
+    </figure>
+    {%- endif %}{% endfor %}
+  </div>
+  {%- if block.caption or block.credit %}
+  <figcaption class="gallery-caption">{{ block.caption | default('') | escape }}{% if block.credit %} <span class="credit">{{ block.credit | escape }}</span>{% endif %}</figcaption>
+  {%- endif %}
+</figure>
+{%- elif block.type == 'quote' and block.text %}
+<figure class="block-quote">
+  <blockquote><p>{{ block.text | escape }}</p></blockquote>
+  {%- if block.attribution %}<figcaption>— {{ block.attribution | escape }}</figcaption>{% endif %}
+</figure>
+{%- elif block.type == 'divider' %}
+<hr class="block-divider divider-{{ block.style | default('line') }}">
+{%- elif block.type == 'video' and block.url %}
+{%- set embed = block.url | videoEmbed %}
+<figure class="block-video">
+  {%- if embed %}
+  <div class="video-frame"><iframe src="{{ embed }}" title="{{ block.caption | default('Video') | escape }}" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe></div>
+  {%- else %}
+  <p><a class="btn" href="{{ block.url | escape }}" target="_blank" rel="noopener noreferrer">Watch video ↗</a></p>
+  {%- endif %}
+  {%- if block.caption %}<figcaption>{{ block.caption | escape }}</figcaption>{% endif %}
+</figure>
+{%- elif block.type == 'audio' and (block.file or block.url) %}
+<figure class="block-audio">
+  {%- if block.title %}<p class="block-audio-title">{{ block.title | escape }}</p>{% endif %}
+  <audio controls preload="metadata" src="{{ (block.file or block.url) | escape }}"></audio>
+  {%- if block.caption %}<figcaption>{{ block.caption | escape }}</figcaption>{% endif %}
+</figure>
+{%- endif %}
+{%- endfor %}

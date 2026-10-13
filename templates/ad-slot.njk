@@ -1,0 +1,20 @@
+{#- Renders one advertising slot. Expects: adSlot (placement), adList (candidates), adLang.
+    /assets/ads.js shows the first candidate whose campaign dates are active right now. -#}
+{%- if adList and adList.length -%}
+<aside class="ad-slot ad-slot--{{ adSlot }}" data-ad-slot="{{ adSlot }}" aria-label="{{ 'advertisement' | label(adLang) }}" hidden>
+  {%- for ad in adList %}
+  <div class="ad" data-ad-id="{{ ad.id }}" data-ad-start="{{ ad.start | isoDate }}" data-ad-end="{{ ad.end | isoDate }}" hidden>
+    <p class="ad-label">{{ 'advertisement' | label(adLang) }} · {{ 'sponsoredBy' | label(adLang) }} {{ ad.advertiser | default(ad.title) | escape }}</p>
+    <a class="ad-link" href="{{ ad.url | escape }}" target="_blank" rel="sponsored noopener noreferrer">
+      <img class="ad-creative" src="{{ ad.image | escape }}" alt="{{ ad.image_alt | default(ad.advertiser) | default('') | escape }}" loading="lazy">
+      {%- if ad.headline or ad.text %}
+      <span class="ad-copy">
+        {%- if ad.headline %}<strong class="ad-headline">{{ ad.headline | escape }}</strong>{% endif %}
+        {%- if ad.text %}<span class="ad-text">{{ ad.text | escape }}</span>{% endif %}
+      </span>
+      {%- endif %}
+    </a>
+  </div>
+  {%- endfor %}
+</aside>
+{%- endif -%}

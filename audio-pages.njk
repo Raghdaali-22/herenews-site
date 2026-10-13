@@ -4,62 +4,39 @@ pagination:
   data: collections.audio
   size: 1
   alias: post
-permalink: "/publications/audio/{{ post.fileSlug | slugify }}/index.html"
+  addAllPagesToCollections: false
+permalink: "/publications/audio/{{ post | pubSlug }}/index.html"
 eleventyComputed:
   title: "{{ post.data.title }}"
-  description: "{{ post.data.description }}"
+  description: "{{ post.data.subtitle or post.data.description }}"
 ---
+{%- set d = post.data %}
+{%- set lang = d | pubLang %}
+{%- set audioSrc = d.audio_url or d.external_audio_url %}
+<article class="publication-article lang-{{ lang }}"{% if lang == 'ar' %} lang="ar" dir="rtl"{% elif lang == 'en' %} lang="en"{% endif %}>
+  {% include "item-header.njk" %}
 
-{% set audioSrc = post.data.audio_url or post.data.external_audio_url %}
-
-
-<article class="publication-article">
-
-  <p><a href="/publications/">← All publications</a></p>
-
-  <p class="small">
-    Audio · {{ post.data.date | shortDate }}
-  </p>
-
-  <h1>{{ post.data.title | escape }}</h1>
-
-  <p class="small">
-    By {{ post.data.author | default('Here News') | escape }}
-  </p>
-
-  {% if post.data.image %}
+  {% if d.image %}
     <div class="publication-cover-wrapper cover-medium">
-      <img
-        class="publication-cover"
-        src="{{ post.data.image | escape }}"
-        alt="{{ post.data.title | escape }}"
-      >
+      <img class="publication-cover" src="{{ d.image | escape }}" alt="{{ d.title | escape }}">
     </div>
   {% endif %}
 
-  {% if post.data.description %}
-    <p class="lede">{{ post.data.description | escape }}</p>
-  {% endif %}
+  {% for para in d.description | default('') | paragraphs %}<p class="lede">{{ para | escape }}</p>{% endfor %}
 
   {% if audioSrc %}
     <section class="audio-player-section">
       <h2>Listen to this recording</h2>
-
       <audio controls preload="metadata">
         <source src="{{ audioSrc | escape }}" type="audio/mpeg">
         Your browser does not support HTML audio.
       </audio>
-
       <p class="small">
-        <a href="{{ audioSrc | escape }}" target="_blank" rel="noopener noreferrer">
-          Open audio file ↗
-        </a>
+        <a href="{{ audioSrc | escape }}" target="_blank" rel="noopener noreferrer">Open audio file ↗</a>
       </p>
     </section>
   {% endif %}
 
-  <div class="publication-body">
-    {{ post.templateContent | safe }}
-  </div>
-
+  <div class="publication-body">{{ post.templateContent | safe }}</div>
+  {% include "item-tags.njk" %}
 </article>

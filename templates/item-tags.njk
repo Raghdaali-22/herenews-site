@@ -1,0 +1,9 @@
+{%- set topics = d.topics | asList %}
+{%- if topics.length %}
+  <nav class="article-tags" aria-label="{{ 'tags' | label(lang) }}">
+    <span class="small">{{ 'tags' | label(lang) }}:</span>
+    {%- for topic in topics %}
+    <a class="pill tag-link" href="/publications/tag/{{ topic | taxonomySlug }}/">{{ topic | escape }}</a>
+    {%- endfor %}
+  </nav>
+{%- endif %}

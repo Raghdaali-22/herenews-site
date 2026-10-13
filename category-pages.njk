@@ -1,0 +1,17 @@
+---
+layout: layout.njk
+pagination:
+  data: collections.categoryList
+  size: 1
+  alias: group
+  addAllPagesToCollections: false
+permalink: "publications/category/{{ group.slug }}/index.html"
+eleventyComputed:
+  title: "{{ group.name }}"
+  description: "Here News publications in {{ group.name }}."
+---
+{% set activeTaxonomy = 'category:' + group.slug %}
+<section class="publication-heading"><span class="kicker"><span class="dot"></span> Category</span><h1>{{ group.name | escape }}</h1></section>
+{% include "taxonomy-nav.njk" %}
+{% set listingItems = group.items %}{% set listingContext = { category: group.name } %}
+{% include "publication-list.njk" %}

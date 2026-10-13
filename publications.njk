@@ -4,28 +4,6 @@ title: Publications
 permalink: /publications/index.html
 ---
 <section class="publication-heading"><span class="kicker"><span class="dot"></span> Here News publications</span><h1>Stories worth telling.</h1><p class="lede">Articles, documentaries, videos and audio projects.</p></section>
-{% set allItems = collections.articles.concat(collections.documentaries).concat(collections.audio) %}
-{% if allItems.length %}
-<div class="publication-grid">
-{% for item in allItems | sort(false, false, 'data.date') | reverse %}
-
-
-{% if item.inputPath.includes('/articles/') %}
-  {% set itemUrl = "/publications/articles/" + (item.fileSlug | slugify) + "/" %}
-{% elif item.inputPath.includes('/documentaries/') %}
-  {% set itemUrl = "/publications/documentaries/" + (item.fileSlug | slugify) + "/" %}
-{% else %}
-  {% set itemUrl = "/publications/audio/" + (item.fileSlug | slugify) + "/" %}
-{% endif %}
-
-
-<article class="card publication-card">
-{% if item.data.image %}<a href="{{ itemUrl }}"><img src="{{ item.data.image | escape }}" alt="" loading="lazy"></a>{% endif %}
-<p class="small">{% if item.inputPath.includes('/articles/') %}Article{% elif item.inputPath.includes('/documentaries/') %}Documentary / Video{% else %}Audio{% endif %} · {{ item.data.date | shortDate }}</p>
-<h2><a href="{{ itemUrl }}">{{ item.data.title | escape }}</a></h2>
-<p>{{ item.data.description | default('') | escape }}</p><p class="small">By {{ item.data.author | default('Here News') | escape }}</p>
-<a class="publication-read" href="{{ itemUrl }}">Read / View →</a>
-</article>
-{% endfor %}
-</div>
-{% else %}<div class="card"><p>Publications will appear here as they are published.</p></div>{% endif %}
+{% include "taxonomy-nav.njk" %}
+{% set listingItems = collections.publications %}{% set listingContext = { general: true } %}
+{% include "publication-list.njk" %}
