@@ -1,5 +1,6 @@
 ---
 title: Warner to begin final Senate term as new amendments take effect
+subtitle: What Springfield, VA Residents Want From Their Representatives?
 slug: springfield-senate
 date: 2026-11-08T06:51:00.000-05:00
 language: bilingual
