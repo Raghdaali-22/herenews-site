@@ -1,5 +1,5 @@
 ---
-title: Springfield voters split between 11th, 8th Districts as both incumbents win
+title: Springfield residents split between 11th, 8th Districts as both incumbents win
 slug: springfield-representatives
 date: 2026-11-08T06:30:00.000-05:00
 language: en
