@@ -7,6 +7,8 @@ description: Schools became polling centers, what does that means
 category: null
 featured: false
 author: Ali Gamal
+image: /assets/uploads/20261103_164903.jpg
+image_credit: Ali Gamal
 image_size: medium
 ads: true
 ---
