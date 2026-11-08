@@ -8,6 +8,7 @@ description: >+
   single-payer health system, first-time homeownership and safety rules for
   artificial intelligence.
 
+category: Politics
 topics: []
 featured: false
 author: Ali Gamal
