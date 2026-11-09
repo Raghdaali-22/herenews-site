@@ -8,6 +8,7 @@ description: The mild, dry pattern is expected to hold through the first half of
   and Wednesday — Veterans Day
 featured: false
 author: Ali Gamal
+image: /assets/uploads/whatsapp-image-2026-11-08-at-7.58.39-pm.jpeg
 image_size: medium
 ads: true
 ---
