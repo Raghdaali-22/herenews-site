@@ -9,6 +9,12 @@ permalink: "publications/articles/{{ post | pageSlug }}/index.html"
 eleventyComputed:
   title: "{{ post.data.title }}"
   description: "{{ post.data.subtitle or post.data.description }}"
+  ogType: "article"
+  ogImage: "{{ post.data.image }}"
+  pageLang: "{{ post.data | pubLang }}"
+  published: "{{ post.data.date | isoDate }}"
+  author: "{{ post.data.author or 'Here News' }}"
+  section: "{{ post.data.category }}"
 ---
 {%- set d = post.data %}
 {%- set lang = d | pubLang %}

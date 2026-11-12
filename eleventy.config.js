@@ -193,6 +193,15 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("assets");
   eleventyConfig.addPassthroughCopy("favicon.png");
   eleventyConfig.addPassthroughCopy("CNAME");
+  eleventyConfig.addPassthroughCopy("robots.txt");
+
+  eleventyConfig.addGlobalData("site", { url: "https://herenews.net", name: "Here News" });
+  eleventyConfig.addFilter("absoluteUrl", (path, base) => {
+    if (!path) return "";
+    try { return new URL(path, base || "https://herenews.net").href; } catch { return path; }
+  });
+  eleventyConfig.addFilter("json", value => JSON.stringify(value === undefined ? null : value).replace(/</g, "\\u003c"));
+  eleventyConfig.addFilter("xmlEscape", value => String(value || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"));
   eleventyConfig.addWatchTarget("./assets/");
 
   const byDateDesc = (a, b) => new Date(b.data.date || 0) - new Date(a.data.date || 0);
