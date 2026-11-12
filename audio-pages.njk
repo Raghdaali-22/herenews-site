@@ -5,7 +5,7 @@ pagination:
   size: 1
   alias: post
   addAllPagesToCollections: false
-permalink: "/publications/audio/{{ post | pubSlug }}/index.html"
+permalink: "/publications/audio/{{ post | pageSlug }}/index.html"
 eleventyComputed:
   title: "{{ post.data.title }}"
   description: "{{ post.data.subtitle or post.data.description }}"

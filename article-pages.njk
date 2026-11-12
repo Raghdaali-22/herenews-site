@@ -5,7 +5,7 @@ pagination:
   size: 1
   alias: post
   addAllPagesToCollections: false
-permalink: "publications/articles/{{ post | pubSlug }}/index.html"
+permalink: "publications/articles/{{ post | pageSlug }}/index.html"
 eleventyComputed:
   title: "{{ post.data.title }}"
   description: "{{ post.data.subtitle or post.data.description }}"
@@ -29,7 +29,7 @@ eleventyComputed:
   </p>
 
   {%- if seriesItem %}
-  <p dir="{% if lang == 'ar' %}rtl{% else %}auto{% endif %}" class="article-series">{{ 'series' | label(lang) }}: <a href="/publications/series/{{ seriesItem | pubSlug }}/">{{ seriesItem.data.title | escape }}</a>{% if d.series_order %} · {{ 'part' | label(lang) }} {{ d.series_order }}{% endif %}</p>
+  <p dir="{% if lang == 'ar' %}rtl{% else %}auto{% endif %}" class="article-series">{{ 'series' | label(lang) }}: <a href="/publications/series/{{ seriesItem | pageSlug }}/">{{ seriesItem.data.title | escape }}</a>{% if d.series_order %} · {{ 'part' | label(lang) }} {{ d.series_order }}{% endif %}</p>
   {%- endif %}
 
   <h1>{{ d.title | escape }}</h1>
@@ -88,7 +88,7 @@ eleventyComputed:
   {%- if seriesItem and seriesItems.length > 1 %}
   <section class="card series-box">
     <p class="small">{{ 'moreInSeries' | label(lang) }}</p>
-    <h2><a href="/publications/series/{{ seriesItem | pubSlug }}/">{{ seriesItem.data.title | escape }}</a></h2>
+    <h2><a href="/publications/series/{{ seriesItem | pageSlug }}/">{{ seriesItem.data.title | escape }}</a></h2>
     <ol>
       {%- for item in seriesItems %}
       <li>{% if (item | pubUrl) == (post | pubUrl) %}<strong>{{ item.data.title | escape }}</strong>{% else %}<a href="{{ item | pubUrl }}">{{ item.data.title | escape }}</a>{% endif %}</li>

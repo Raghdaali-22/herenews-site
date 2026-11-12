@@ -42,15 +42,22 @@ function kindOf(item) {
   return "";
 }
 
-// The URL slug comes from the editor's "URL name" field so it always matches
-// the CMS "View Live" link (preview_path uses {{fields.slug}}).
+// Matches the editor's "URL name" field. Used where the editor links one
+// entry to another (series, sponsor), not for page addresses.
 function pubSlug(item) {
   return slugify((item.data && item.data.slug) || item.fileSlug);
 }
 
+// Page addresses come from the file name, which the editor keeps unique
+// within a collection (a reused "URL name" gets saved as name-1.md), so two
+// entries can never claim the same page. preview_path uses {{filename}} to match.
+function pageSlug(item) {
+  return slugify(item.fileSlug);
+}
+
 function pubUrl(item) {
   const kind = kindOf(item);
-  return kind ? `/publications/${kind}/${pubSlug(item)}/` : "/publications/";
+  return kind ? `/publications/${kind}/${pageSlug(item)}/` : "/publications/";
 }
 
 function asList(value) {
@@ -249,6 +256,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addFilter("head", (items, n) => asList(items).slice(0, n));
   eleventyConfig.addFilter("pubUrl", pubUrl);
   eleventyConfig.addFilter("pubSlug", pubSlug);
+  eleventyConfig.addFilter("pageSlug", pageSlug);
   eleventyConfig.addFilter("pubKind", item => kindOf(item));
   eleventyConfig.addFilter("kindLabel", (item, lang) => {
     const kind = KINDS[kindOf(item)];

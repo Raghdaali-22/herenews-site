@@ -28,8 +28,8 @@ collections:
     folder: "content/articles"
     create: true
     slug: "{{fields.slug}}"
-    # Must match the site's page URL (built from the same "URL name" field).
-    preview_path: "publications/articles/{{fields.slug}}/"
+    # Must match the site's page URL, which is built from the file name.
+    preview_path: "publications/articles/{{filename}}/"
     extension: "md"
     format: "frontmatter"
     summary: "{{title}} — {{category}}"
@@ -48,7 +48,7 @@ collections:
       - label: "URL name (English letters, numbers, dashes)"
         name: "slug"
         widget: "string"
-        hint: "Used in the web address, e.g. my-first-story. Lowercase English only, even for Arabic titles. Changing it later changes the article's link."
+        hint: "Used in the web address, e.g. my-first-story. Lowercase English only, even for Arabic titles. Use a new name for each story: if the name is already taken, the editor adds -1 to the address."
         pattern: ["^[a-z0-9]+(?:-[a-z0-9]+)*$", "Use lowercase English letters, numbers and single dashes only (no spaces)."]
       - { label: "Publication Date", name: "date", widget: "datetime" }
       - label: "Language"
@@ -230,7 +230,7 @@ collections:
     folder: "content/series"
     create: true
     slug: "{{fields.slug}}"
-    preview_path: "publications/series/{{fields.slug}}/"
+    preview_path: "publications/series/{{filename}}/"
     extension: "md"
     format: "frontmatter"
     fields:
@@ -311,7 +311,7 @@ collections:
     folder: "content/documentaries"
     create: true
     slug: "{{fields.slug}}"
-    preview_path: "publications/documentaries/{{fields.slug}}/"
+    preview_path: "publications/documentaries/{{filename}}/"
     extension: "md"
     format: "frontmatter"
     fields:
@@ -351,7 +351,7 @@ collections:
     folder: "content/audio"
     create: true
     slug: "{{fields.slug}}"
-    preview_path: "publications/audio/{{fields.slug}}/"
+    preview_path: "publications/audio/{{filename}}/"
     extension: "md"
     format: "frontmatter"
     fields:
