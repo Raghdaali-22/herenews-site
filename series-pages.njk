@@ -5,7 +5,7 @@ pagination:
   size: 1
   alias: series
   addAllPagesToCollections: false
-permalink: "publications/series/{{ series | pubSlug }}/index.html"
+permalink: "publications/series/{{ series | pageSlug }}/index.html"
 eleventyComputed:
   title: "{{ series.data.title }}"
   description: "{{ series.data.description }}"
