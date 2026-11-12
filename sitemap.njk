@@ -1,0 +1,23 @@
+---
+permalink: /sitemap.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>{{ site.url }}/</loc></url>
+  <url><loc>{{ site.url }}/publications/</loc>{% if collections.publications.length %}<lastmod>{{ collections.publications[0].data.date | isoDate }}</lastmod>{% endif %}</url>
+  <url><loc>{{ site.url }}/about.html</loc></url>
+  <url><loc>{{ site.url }}/project.html</loc></url>
+{%- for item in collections.publications %}
+  <url><loc>{{ site.url }}{{ item | pubUrl | xmlEscape }}</loc>{% if item.data.date %}<lastmod>{{ item.data.date | isoDate }}</lastmod>{% endif %}</url>
+{%- endfor %}
+{%- for group in collections.categoryList %}
+  <url><loc>{{ site.url }}/publications/category/{{ group.slug | xmlEscape }}/</loc></url>
+{%- endfor %}
+{%- for group in collections.tagList %}
+  <url><loc>{{ site.url }}/publications/tag/{{ group.slug | urlencode | xmlEscape }}/</loc></url>
+{%- endfor %}
+{%- for series in collections.series %}
+  <url><loc>{{ site.url }}/publications/series/{{ series | pageSlug | xmlEscape }}/</loc></url>
+{%- endfor %}
+</urlset>

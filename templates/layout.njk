@@ -1,11 +1,27 @@
 <!doctype html>
-<html lang="en">
+<html lang="{% if pageLang == 'ar' %}ar{% else %}en{% endif %}">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/assets/styles.css">
   <script src="/assets/ads.js" defer></script>
   <title>{{ title | default("Publications") | escape }} — Here News</title>
-  <meta name="description" content="{{ description | default('Independent reporting, documentaries and audio from Here News.') | escape }}">
+  {%- set metaDescription = description | default('Independent reporting, documentaries and audio from Here News.') %}
+  {%- set canonical = page.url | absoluteUrl(site.url) %}
+  {%- set shareImage = (ogImage or '/favicon.png') | absoluteUrl(site.url) %}
+  <meta name="description" content="{{ metaDescription | escape }}">
+  <link rel="canonical" href="{{ canonical }}">
+  <meta property="og:site_name" content="Here News">
+  <meta property="og:type" content="{{ ogType | default('website') }}">
+  <meta property="og:title" content="{{ title | default('Publications') | escape }}">
+  <meta property="og:description" content="{{ metaDescription | escape }}">
+  <meta property="og:url" content="{{ canonical }}">
+  <meta property="og:image" content="{{ shareImage }}">
+  <meta name="twitter:card" content="{% if ogImage %}summary_large_image{% else %}summary{% endif %}">
+  {%- if ogType == 'article' %}
+  <meta property="article:published_time" content="{{ published }}">
+  {%- if section %}<meta property="article:section" content="{{ section | escape }}">{% endif %}
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsArticle","headline":{{ title | json | safe }},"description":{{ metaDescription | json | safe }},"datePublished":{{ published | json | safe }},"inLanguage":{{ ('ar' if pageLang == 'ar' else 'en') | json | safe }},"mainEntityOfPage":{{ canonical | json | safe }},"image":[{{ shareImage | json | safe }}],"author":[{"@type":"Person","name":{{ author | json | safe }}}],"publisher":{"@type":"Organization","name":"Here News","url":"https://herenews.net/","logo":{"@type":"ImageObject","url":"https://herenews.net/favicon.png"}}}</script>
+  {%- endif %}
 </head>
 <body>
 <header><div class="container nav"><a class="brand" href="/index.html">Here News</a>
