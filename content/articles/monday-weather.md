@@ -12,6 +12,8 @@ description: >+
   times" tag on the morning forecast. Skies clear tonight as temperatures slide
   through the 50s by dinnertime and bottom out near 40.
 
+category: ""
+location: Springfield
 featured: false
 author: Ali Gamal
 image: /assets/uploads/whatsapp-image-2026-11-09-at-11.37.05-am.jpeg
