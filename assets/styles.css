@@ -683,3 +683,6 @@ article,
 .publication-card img, .featured-card img{ margin: 0; }
 .featured{ margin-bottom: 34px; }
 .latest-title{ margin: 0 0 16px; }
+
+/* Button groups wrap cleanly, with even spacing and left edges aligned */
+.btn-row{ display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; }
