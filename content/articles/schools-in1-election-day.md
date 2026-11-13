@@ -5,6 +5,7 @@ date: 2026-11-02T14:47:00.000-05:00
 language: bilingual
 description: Schools became polling centers, what does that means
 category: null
+location: Springfield
 featured: false
 author: Ali Gamal
 image: /assets/uploads/20261103_164903.jpg
