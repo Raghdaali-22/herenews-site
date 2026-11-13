@@ -686,3 +686,15 @@ article,
 
 /* Button groups wrap cleanly, with even spacing and left edges aligned */
 .btn-row{ display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; }
+
+/* Local stories */
+.local-bar{ margin: -10px 0 18px; font-size: 15px; color: var(--muted); }
+.local-bar select{
+  margin-left: 6px; padding: 6px 10px; border-radius: 999px;
+  border: 1px solid rgba(0,0,0,.18); background: rgba(255,255,255,.6);
+  font: inherit; color: var(--text);
+}
+.near-you{
+  display: inline-block; margin-right: 8px; padding: 1px 8px; border-radius: 999px;
+  background: rgba(0,0,0,.86); color: #fff; font-size: 12px; letter-spacing: .02em;
+}

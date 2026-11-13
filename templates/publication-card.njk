@@ -1,7 +1,7 @@
 {#- One publication card. Expects: item -#}
 {%- set itemUrl = item | pubUrl %}
 {%- set itemLang = item.data | pubLang %}
-<article class="card publication-card"{% if itemLang == 'ar' %} lang="ar" dir="rtl"{% endif %}>
+<article class="card publication-card" data-location="{{ item.data.location | default('') | escape }}"{% if item.data.pinned %} data-pinned="true"{% endif %}{% if itemLang == 'ar' %} lang="ar" dir="rtl"{% endif %}>
 {% if item.data.image %}<a href="{{ itemUrl }}"><img src="{{ item.data.image | escape }}" alt="" loading="lazy"></a>{% endif %}
 <p dir="{% if itemLang == 'ar' %}rtl{% else %}auto{% endif %}" class="small publication-meta">
   {%- if item.data.category %}<a class="category-link" href="/publications/category/{{ item.data.category | taxonomySlug }}/">{{ item.data.category | escape }}</a> · {% endif -%}
