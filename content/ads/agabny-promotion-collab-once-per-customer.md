@@ -19,7 +19,6 @@ placements:
   - in-article
   - sidebar
   - bottom
-  - listing
 categories: null
 priority: 0
 ---
