@@ -1,5 +1,5 @@
 {#- Shared header for documentary and audio pages. Expects: post, d, lang -#}
-  <p dir="{% if lang == 'ar' %}rtl{% else %}auto{% endif %}" class="article-back"><a href="/publications/">{% if lang == 'ar' %}→{% else %}←{% endif %} {{ 'all' | label(lang) }}</a></p>
+  <p dir="{% if lang == 'ar' %}rtl{% else %}auto{% endif %}" class="article-back"><a href="/">{% if lang == 'ar' %}→{% else %}←{% endif %} {{ 'all' | label(lang) }}</a></p>
   <p dir="{% if lang == 'ar' %}rtl{% else %}auto{% endif %}" class="small article-meta">
     {%- if d.category %}<a class="category-link" href="/publications/category/{{ d.category | taxonomySlug }}/">{{ d.category | escape }}</a> · {% endif -%}
     {{ post | kindLabel(lang) }} · <time datetime="{{ d.date | isoDate }}">{{ d.date | shortDate(lang) }}</time>

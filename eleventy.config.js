@@ -57,7 +57,7 @@ function pageSlug(item) {
 
 function pubUrl(item) {
   const kind = kindOf(item);
-  return kind ? `/publications/${kind}/${pageSlug(item)}/` : "/publications/";
+  return kind ? `/publications/${kind}/${pageSlug(item)}/` : "/";
 }
 
 function asList(value) {
@@ -290,7 +290,7 @@ module.exports = function(eleventyConfig) {
   // Arabic and English text in the same article both align correctly.
   eleventyConfig.addTransform("bidi", function(content) {
     const out = this.page && this.page.outputPath;
-    if (!out || !out.endsWith(".html") || !this.page.url || !this.page.url.startsWith("/publications/")) return content;
+    if (!out || !out.endsWith(".html") || !this.page.url || !(this.page.url === "/" || this.page.url.startsWith("/publications/"))) return content;
     return content.replace(/<(p|h[1-6]|li|blockquote|figcaption|dd|dt)(\s[^>]*)?>/g, (tag, name, attrs = "") =>
       /\sdir=/.test(attrs) ? tag : `<${name} dir="auto"${attrs}>`);
   });

@@ -1,27 +1,26 @@
 ---
-permalink: /index.html
+permalink: /here-news-project.html
 eleventyExcludeFromCollections: true
 ---
 <!doctype html>
 <html lang="en">
 <head>
-  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="icon" type="image/png" href="/favicon.png">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Here News — Coming Soon</title>
-  <meta name="description" content="Here News is coming soon — a verified, location-based journalism platform that empowers independent journalists and helps readers access authentic local stories." />
-  <link rel="canonical" href="https://herenews.net/" />
+  <title>Here News Project — Coming Soon</title>
+  <meta name="description" content="The Here News Project is coming soon — a verified, location-based journalism platform that empowers independent journalists and helps readers access authentic local stories." />
+  <link rel="canonical" href="https://herenews.net/here-news-project.html" />
   <link rel="stylesheet" href="/assets/styles.css" />
-  <script src="/assets/ads.js" defer></script>
-</head>
+  </head>
 <body>
   <header>
     <div class="container nav">
-      <a class="brand" href="/index.html" aria-label="Here News home">Here News</a>
+      <a class="brand" href="/" aria-label="Here News home">Here News</a>
       <nav class="navlinks" aria-label="Primary navigation">
         
-<a class="active" href="/index.html">Home</a>
-<a href="/publications/">Publications</a>
+<a href="/">Publications</a>
+<a class="active" href="/here-news-project.html">Here News Project</a>
 <a href="/about.html">About Us</a>
 <a href="/project.html">Scientific Project</a>
 <a href="/admin/" target="_blank" rel="noopener">Editorial Login</a>
@@ -51,29 +50,6 @@ eleventyExcludeFromCollections: true
 
         <div class="hr"></div>
 
-        {%- set featuredItems = collections.featured | head(3) %}
-        {%- if featuredItems.length %}
-        <section class="featured" aria-labelledby="featured-title">
-          <h2 id="featured-title" class="featured-title">Featured stories</h2>
-          <div class="featured-grid count-{{ featuredItems.length }}">
-            {%- for item in featuredItems %}
-            {%- set itemLang = item.data | pubLang %}
-            <article class="card featured-card{% if loop.first %} featured-lead{% endif %}"{% if itemLang == 'ar' %} lang="ar" dir="rtl"{% endif %}>
-              {% if item.data.image %}<a href="{{ item | pubUrl }}"><img src="{{ item.data.image | escape }}" alt="" loading="lazy"></a>{% endif %}
-              <p dir="{% if itemLang == 'ar' %}rtl{% else %}auto{% endif %}" class="small publication-meta">
-                {%- if item.data.category %}<a class="category-link" href="/publications/category/{{ item.data.category | taxonomySlug }}/">{{ item.data.category | escape }}</a> · {% endif -%}
-                {{ item | kindLabel(itemLang) }} · {{ item.data.date | shortDate(itemLang) }}
-              </p>
-              <h3 dir="auto"><a href="{{ item | pubUrl }}">{{ item.data.title | escape }}</a></h3>
-              {% if item.data.subtitle %}<p class="publication-card-subtitle" dir="auto">{{ item.data.subtitle | escape }}</p>{% endif %}
-              <p class="small">{{ 'by' | label(itemLang) }} {{ item.data.author | default('Here News') | escape }}</p>
-            </article>
-            {%- endfor %}
-          </div>
-          <p><a class="publication-read" href="/publications/">All publications →</a></p>
-        </section>
-        <div class="hr"></div>
-        {%- endif %}
 
         <div class="grid">
           <div class="card col-8">
