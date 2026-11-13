@@ -1,7 +1,8 @@
 {#- Grid of publication cards with a sponsored listing slot. Expects: listingItems, listingContext -#}
 {%- set listingAds = collections.advertisements | adsFor(listingContext, 'listing', 3) %}
 {% if listingItems.length %}
-<div class="publication-grid">
+<div class="local-bar" data-local-bar hidden></div>
+<div class="publication-grid" data-local-grid>
 {%- for item in listingItems %}
 {% include "publication-card.njk" %}
 {%- if loop.index == 3 or (loop.last and loop.length < 3) %}

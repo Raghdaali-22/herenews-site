@@ -1,0 +1,14 @@
+{
+  "categories": [
+    { "name": "Politics", "keywords": ["politics", "political", "election", "elections", "midterm", "midterms", "vote", "votes", "voters", "voting", "ballot", "ballots", "polling", "senate", "senator", "congress", "congressional", "representative", "representatives", "house of representatives", "democrat", "democrats", "democratic", "republican", "republicans", "governor", "campaign", "candidate", "candidates", "incumbent", "legislation", "board of supervisors", "سياسة", "انتخابات", "برلمان", "مجلس الشيوخ"] },
+    { "name": "Weather", "keywords": ["weather", "forecast", "forecasters", "rain", "showers", "sunny", "cloudy", "temperature", "temperatures", "degrees", "wind", "winds", "windy", "breezy", "storm", "storms", "snow", "high near", "low around", "humidity", "طقس", "أمطار", "درجة الحرارة"] },
+    { "name": "Education", "keywords": ["school", "schools", "student", "students", "teacher", "teachers", "fcps", "classroom", "education", "school board", "bell times", "start times", "university", "college", "مدرسة", "مدارس", "تعليم", "طلاب"] },
+    { "name": "Investigations", "keywords": ["investigation", "investigative", "investigators", "probe", "records show", "documents show", "تحقيق"] },
+    { "name": "History", "keywords": ["history", "historical", "historic", "anniversary", "century", "archive", "archives", "heritage", "تاريخ", "تراث"] },
+    { "name": "Society", "keywords": ["community", "residents", "families", "neighborhood", "neighborhoods", "housing", "health", "social", "مجتمع"] },
+    { "name": "Culture", "keywords": ["culture", "cultural", "art", "arts", "music", "film", "festival", "museum", "book", "books", "ثقافة", "فن"] },
+    { "name": "Media", "keywords": ["journalism", "journalist", "journalists", "media", "press", "newspaper", "newsroom", "broadcast", "صحافة", "إعلام"] },
+    { "name": "Opinion", "keywords": ["opinion", "op-ed", "column", "commentary", "رأي"] },
+    { "name": "Other", "keywords": [] }
+  ]
+}

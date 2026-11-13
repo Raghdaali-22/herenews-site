@@ -32,8 +32,8 @@ collections:
     preview_path: "publications/articles/{{filename}}/"
     extension: "md"
     format: "frontmatter"
-    summary: "{{title}} — {{category}}"
-    sortable_fields: ["date", "title", "category"]
+    summary: "{{title}}"
+    sortable_fields: ["date", "title", "category", "pinned"]
     view_groups:
       - { label: "Category", field: "category" }
       - { label: "Language", field: "language" }
@@ -60,14 +60,29 @@ collections:
           - { label: "Bilingual (English + Arabic)", value: "bilingual" }
           - { label: "Arabic", value: "ar" }
           - { label: "English", value: "en" }
-      - { label: "Summary", name: "description", widget: "text", hint: "Shown on listings and as the opening paragraph. Leave a blank line between English and Arabic." }
+      - { label: "Summary", name: "description", widget: "text", required: false, hint: "Shown on listings and as the opening paragraph. Leave a blank line between English and Arabic. Leave empty to use the article's first paragraph." }
 
       # ---- Organization ----
       - label: "Primary Category"
         name: "category"
-        widget: "select"
+        widget: "relation"
+        collection: "settings"
+        file: "categories"
+        search_fields: ["categories.*.name"]
+        display_fields: ["categories.*.name"]
+        value_field: "categories.*.name"
         required: false
-        options: ["Politics", "Investigations", "History", "Society", "Culture", "Media", "Opinion", "Other"]
+        hint: "Leave empty and Here News picks one from the title and text (the preview shows its suggestion). Add or edit categories and their keywords under Site Settings → Categories."
+      - label: "Location (city)"
+        name: "location"
+        widget: "relation"
+        collection: "settings"
+        file: "locations"
+        search_fields: ["locations.*.name"]
+        display_fields: ["locations.*.name"]
+        value_field: "locations.*.name"
+        required: false
+        hint: "Readers in this area see the story near the top, and the site name reads “Here Springfield”. Leave empty to detect it from the text. Add cities under Site Settings → Locations."
       - label: "Tags"
         name: "topics"
         widget: "list"
@@ -86,6 +101,8 @@ collections:
         hint: "Create the series first under “Series & Collections” (and publish it)."
       - { label: "Part number in series", name: "series_order", widget: "number", value_type: "int", min: 1, required: false }
       - { label: "Feature on homepage", name: "featured", widget: "boolean", required: false, default: false, hint: "The three most recent featured stories appear on the homepage." }
+      - { label: "Pin to top", name: "pinned", widget: "boolean", required: false, default: false, hint: "Pinned stories stay at the top of every list, above newer ones." }
+      - { label: "Pin position", name: "pin_order", widget: "number", value_type: "int", min: 1, required: false, hint: "When several stories are pinned: 1 shows first, 2 second, and so on." }
 
       # ---- Attribution ----
       - { label: "Author", name: "author", widget: "string", default: "Ali Gamal" }
@@ -283,10 +300,14 @@ collections:
           - { label: "Publication listings", value: "listing" }
       - label: "Target categories"
         name: "categories"
-        widget: "select"
+        widget: "relation"
+        collection: "settings"
+        file: "categories"
+        search_fields: ["categories.*.name"]
+        display_fields: ["categories.*.name"]
+        value_field: "categories.*.name"
         multiple: true
         required: false
-        options: ["Politics", "Investigations", "History", "Society", "Culture", "Media", "Opinion", "Other"]
         hint: "Leave categories and tags empty to run on all content."
       - label: "Target tags"
         name: "topics"
@@ -331,13 +352,34 @@ collections:
           - { label: "Bilingual (English + Arabic)", value: "bilingual" }
           - { label: "Arabic", value: "ar" }
           - { label: "English", value: "en" }
-      - { label: "Primary Category", name: "category", widget: "select", required: false, options: ["Politics", "Investigations", "History", "Society", "Culture", "Media", "Opinion", "Other"] }
+      - label: "Primary Category"
+        name: "category"
+        widget: "relation"
+        collection: "settings"
+        file: "categories"
+        search_fields: ["categories.*.name"]
+        display_fields: ["categories.*.name"]
+        value_field: "categories.*.name"
+        required: false
+        hint: "Leave empty and Here News picks one from the title and text."
+      - label: "Location (city)"
+        name: "location"
+        widget: "relation"
+        collection: "settings"
+        file: "locations"
+        search_fields: ["locations.*.name"]
+        display_fields: ["locations.*.name"]
+        value_field: "locations.*.name"
+        required: false
+        hint: "Readers in this area see the story near the top, and the site name reads “Here Springfield”. Leave empty to detect it from the text. Add cities under Site Settings → Locations."
       - label: "Tags"
         name: "topics"
         widget: "list"
         required: false
         field: { label: "Tag", name: "tag", widget: "string" }
       - { label: "Feature on homepage", name: "featured", widget: "boolean", required: false, default: false }
+      - { label: "Pin to top", name: "pinned", widget: "boolean", required: false, default: false, hint: "Pinned stories stay at the top of every list, above newer ones." }
+      - { label: "Pin position", name: "pin_order", widget: "number", value_type: "int", min: 1, required: false, hint: "When several stories are pinned: 1 shows first, 2 second, and so on." }
       - { label: "Source / originally published by", name: "source_name", widget: "string", required: false }
       - { label: "Source link", name: "source_url", widget: "string", required: false }
       - { label: "Date", name: "date", widget: "datetime" }
@@ -371,13 +413,34 @@ collections:
           - { label: "Bilingual (English + Arabic)", value: "bilingual" }
           - { label: "Arabic", value: "ar" }
           - { label: "English", value: "en" }
-      - { label: "Primary Category", name: "category", widget: "select", required: false, options: ["Politics", "Investigations", "History", "Society", "Culture", "Media", "Opinion", "Other"] }
+      - label: "Primary Category"
+        name: "category"
+        widget: "relation"
+        collection: "settings"
+        file: "categories"
+        search_fields: ["categories.*.name"]
+        display_fields: ["categories.*.name"]
+        value_field: "categories.*.name"
+        required: false
+        hint: "Leave empty and Here News picks one from the title and text."
+      - label: "Location (city)"
+        name: "location"
+        widget: "relation"
+        collection: "settings"
+        file: "locations"
+        search_fields: ["locations.*.name"]
+        display_fields: ["locations.*.name"]
+        value_field: "locations.*.name"
+        required: false
+        hint: "Readers in this area see the story near the top, and the site name reads “Here Springfield”. Leave empty to detect it from the text. Add cities under Site Settings → Locations."
       - label: "Tags"
         name: "topics"
         widget: "list"
         required: false
         field: { label: "Tag", name: "tag", widget: "string" }
       - { label: "Feature on homepage", name: "featured", widget: "boolean", required: false, default: false }
+      - { label: "Pin to top", name: "pinned", widget: "boolean", required: false, default: false, hint: "Pinned stories stay at the top of every list, above newer ones." }
+      - { label: "Pin position", name: "pin_order", widget: "number", value_type: "int", min: 1, required: false, hint: "When several stories are pinned: 1 shows first, 2 second, and so on." }
       - { label: "Source / originally published by", name: "source_name", widget: "string", required: false }
       - { label: "Source link", name: "source_url", widget: "string", required: false }
       - { label: "Date", name: "date", widget: "datetime" }
@@ -401,3 +464,44 @@ collections:
         hint: "Optional: use a direct MP3 link if the file is hosted elsewhere."
 
       - { label: "Transcript or Notes", name: "body", widget: "markdown", required: false }
+
+  - name: "settings"
+    label: "Site Settings"
+    editor: { preview: false }
+    files:
+      - name: "categories"
+        label: "Categories"
+        file: "content/settings/categories.json"
+        description: "The categories articles can use. Keywords let the site pick a category automatically when an article has none."
+        fields:
+          - label: "Categories"
+            name: "categories"
+            widget: "list"
+            summary: "{{fields.name}}"
+            hint: "Drag to reorder. Renaming a category does not change articles that already use the old name."
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - label: "Keywords"
+                name: "keywords"
+                widget: "list"
+                required: false
+                hint: "Words or phrases that signal this category, separated by commas (English or Arabic), e.g. rain, forecast, طقس. Words in the title count most."
+      - name: "locations"
+        label: "Locations"
+        file: "content/settings/locations.json"
+        description: "Cities Here News covers. Readers in these areas see local stories first and the site name reads “Here <city>”."
+        fields:
+          - label: "Locations"
+            name: "locations"
+            widget: "list"
+            summary: "{{fields.name}}, {{fields.region}}"
+            fields:
+              - { label: "City name", name: "name", widget: "string", hint: "Shown as “Here <name>”, e.g. Springfield." }
+              - { label: "State / region", name: "region", widget: "string", required: false, hint: "e.g. VA" }
+              - label: "Other names in articles"
+                name: "aliases"
+                widget: "list"
+                required: false
+                hint: "Other ways articles mention this place, separated by commas, e.g. Springfield, VA, Fairfax County. Used to detect an article's location."
+              - { label: "Place on the map", name: "point", widget: "map", type: "Point", hint: "Click the city's centre on the map." }
+              - { label: "Area size (km)", name: "radius_km", widget: "number", value_type: "int", default: 40, min: 5, hint: "Readers within this distance count as local." }

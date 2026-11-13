@@ -1,4 +1,7 @@
+const fs = require("fs");
+const path = require("path");
 const markdownIt = require("markdown-it");
+const smart = require("./assets/smart.js");
 
 const md = markdownIt({ html: true });
 
@@ -63,6 +66,78 @@ function pubUrl(item) {
 function asList(value) {
   if (!value) return [];
   return (Array.isArray(value) ? value : [value]).filter(v => v !== null && v !== undefined && v !== "");
+}
+
+// ---- Site Settings (editable in the CMS under "Site Settings") ----
+function readSettings(name) {
+  try {
+    return JSON.parse(fs.readFileSync(path.join(__dirname, "content", "settings", `${name}.json`), "utf8"));
+  } catch {
+    return {};
+  }
+}
+const SETTINGS = {
+  categories: asList(readSettings("categories").categories),
+  locations: asList(readSettings("locations").locations)
+};
+
+function plainText(value) {
+  return String(value || "")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, " ")
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/[#>*_`~]+/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function bodyOf(item) {
+  let raw = "";
+  try { raw = fs.readFileSync(item.inputPath, "utf8").replace(/^---[\s\S]*?\n---\s*/, ""); } catch {}
+  const blockText = asList(item.data.blocks)
+    .map(b => [b.body, b.text, b.caption, b.title, b.attribution].filter(Boolean).join("\n\n"))
+    .join("\n\n");
+  return `${raw}\n\n${blockText}`;
+}
+
+/*
+ * Fill in what the editor left blank, from the article's own words:
+ * category (from Site Settings → Categories keywords), location (from the
+ * covered cities' names) and the summary (first paragraph). Values the
+ * editor chose are never changed. Safe to call more than once.
+ */
+function enrich(item) {
+  const d = item.data;
+  if (d.__enriched) return item;
+  const body = bodyOf(item);
+  const fields = { title: d.title, subtitle: d.subtitle, description: d.description, body };
+  if (!d.category) {
+    const guess = smart.suggestCategory(fields, SETTINGS.categories);
+    if (guess) { d.category = guess.name; d.category_auto = true; }
+  }
+  if (!d.location) {
+    const guess = smart.suggestLocation(fields, SETTINGS.locations);
+    if (guess) { d.location = guess.name; d.location_auto = true; }
+  }
+  if (!String(d.description || "").trim()) {
+    const first = body.split(/\n\s*\n/).map(plainText).find(p => p.length > 40) || "";
+    if (first) d.description = first.length > 220 ? `${first.slice(0, 217).replace(/\s+\S*$/, "")}…` : first;
+  }
+  d.__enriched = true;
+  return item;
+}
+
+// Pinned items first (by pin position, then newest), then everything else newest first.
+function byDisplayOrder(a, b) {
+  const pa = a.data.pinned === true;
+  const pb = b.data.pinned === true;
+  if (pa !== pb) return pa ? -1 : 1;
+  if (pa) {
+    const oa = Number(a.data.pin_order) || 999;
+    const ob = Number(b.data.pin_order) || 999;
+    if (oa !== ob) return oa - ob;
+  }
+  return new Date(b.data.date || 0) - new Date(a.data.date || 0);
 }
 
 function langOf(data) {
@@ -194,6 +269,9 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("favicon.png");
   eleventyConfig.addPassthroughCopy("CNAME");
   eleventyConfig.addPassthroughCopy("robots.txt");
+  // Settings the editor preview and the reader's browser also read.
+  eleventyConfig.addPassthroughCopy({ "content/settings": "data" });
+  eleventyConfig.addGlobalData("settings", SETTINGS);
 
   eleventyConfig.addGlobalData("site", { url: "https://herenews.net", name: "Here News" });
   eleventyConfig.addFilter("absoluteUrl", (path, base) => {
@@ -208,17 +286,19 @@ module.exports = function(eleventyConfig) {
 
   for (const kind of Object.keys(KINDS)) {
     eleventyConfig.addCollection(kind, collection => {
-      const items = collection.getFilteredByGlob(`./content/${kind}/*.md`).sort(byDateDesc);
+      const items = collection.getFilteredByGlob(`./content/${kind}/*.md`).map(enrich).sort(byDateDesc);
       console.log(`[HERE NEWS] ${kind}: ${items.length} items`, items.map(item => item.inputPath));
       return items;
     });
   }
 
-  eleventyConfig.addCollection("publications", collection =>
-    collection.getFilteredByGlob(Object.keys(KINDS).map(kind => `./content/${kind}/*.md`)).sort(byDateDesc));
+  const allPublications = collection =>
+    collection.getFilteredByGlob(Object.keys(KINDS).map(kind => `./content/${kind}/*.md`)).map(enrich);
+
+  eleventyConfig.addCollection("publications", collection => allPublications(collection).sort(byDisplayOrder));
 
   eleventyConfig.addCollection("featured", collection =>
-    collection.getFilteredByGlob(Object.keys(KINDS).map(kind => `./content/${kind}/*.md`))
+    allPublications(collection)
       .filter(item => item.data.featured === true)
       .sort(byDateDesc));
 
@@ -232,7 +312,7 @@ module.exports = function(eleventyConfig) {
   // Category and tag landing pages, built from article metadata.
   const taxonomy = (field) => collection => {
     const groups = new Map();
-    for (const item of collection.getFilteredByGlob(Object.keys(KINDS).map(kind => `./content/${kind}/*.md`)).sort(byDateDesc)) {
+    for (const item of allPublications(collection).sort(byDisplayOrder)) {
       for (const name of asList(item.data[field])) {
         const slug = slugify(name);
         if (!slug) continue;

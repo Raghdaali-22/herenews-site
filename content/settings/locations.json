@@ -1,0 +1,11 @@
+{
+  "locations": [
+    {
+      "name": "Springfield",
+      "region": "VA",
+      "aliases": ["Springfield, VA", "Springfield, Va.", "Fairfax County"],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.1872,38.7893]}",
+      "radius_km": 40
+    }
+  ]
+}

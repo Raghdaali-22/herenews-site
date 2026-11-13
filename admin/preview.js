@@ -7,6 +7,22 @@
   window.CMS.registerPreviewStyle('/assets/styles.css');
   window.CMS.registerPreviewStyle('/admin/preview.css');
 
+  // Published Site Settings, for the same suggestions the live site makes.
+  var SETTINGS = { categories: [], locations: [] };
+  ['categories', 'locations'].forEach(function (name) {
+    if (!window.fetch) return;
+    fetch('/data/' + name + '.json', { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : {}; })
+      .then(function (j) { SETTINGS[name] = (j && j[name]) || []; })
+      .catch(function () {});
+  });
+
+  function blocksText(blocks) {
+    return (blocks || []).map(function (b) {
+      return [b.body, b.text, b.caption, b.title, b.attribution].filter(Boolean).join('\n\n');
+    }).join('\n\n');
+  }
+
   var LABELS = {
     en: { all: 'All publications', by: 'By', source: 'Source', credits: 'Credits', tags: 'Tags', series: 'Part of the series', part: 'Part', article: 'Article', advertisement: 'Advertisement', sponsoredBy: 'Sponsored by' },
     ar: { all: 'كل المنشورات', by: 'بقلم', source: 'المصدر', credits: 'إسهامات', tags: 'الوسوم', series: 'جزء من سلسلة', part: 'الجزء', article: 'مقال', advertisement: 'إعلان', sponsoredBy: 'برعاية' }
@@ -125,6 +141,23 @@
     var sourceUrl = get('source_url');
     var source = sourceName ? (sourceUrl ? h('a', { href: sourceUrl }, sourceName) : sourceName) : null;
 
+    // What the site will fill in on its own when these are left empty.
+    var smart = window.HereSmart;
+    var fields = {
+      title: get('title'), subtitle: get('subtitle'), description: get('description'),
+      body: get('body') + '\n\n' + blocksText(toJS(blockData))
+    };
+    var category = get('category');
+    var autoCategory = !category && smart ? smart.suggestCategory(fields, SETTINGS.categories) : null;
+    if (autoCategory) category = autoCategory.name;
+    var autoLocation = !get('location') && smart ? smart.suggestLocation(fields, SETTINGS.locations) : null;
+    var notes = [];
+    if (autoCategory) notes.push('Category: ' + autoCategory.name + ' (suggested from the title and text; choose one above to override)');
+    else if (!get('category')) notes.push('Category: none found yet. Pick one above, or add keywords under Site Settings → Categories.');
+    if (get('location')) notes.push('Location: ' + get('location'));
+    else if (autoLocation) notes.push('Location: ' + autoLocation.name + ' (detected from the text)');
+    if (e.getIn(['data', 'pinned']) === true) notes.push('Pinned to top' + (get('pin_order') ? ', position ' + get('pin_order') : ''));
+
     var articleProps = { className: 'publication-article lang-' + lang };
     if (lang === 'ar') { articleProps.lang = 'ar'; articleProps.dir = 'rtl'; }
     else if (lang === 'en') { articleProps.lang = 'en'; }
@@ -132,10 +165,11 @@
     return h('main', { className: 'container publication-main here-preview' },
       h('div', { className: 'article-layout' },
         h('article', articleProps,
+          notes.length ? h('ul', { className: 'preview-notes', dir: 'ltr' }, notes.map(function (n, i) { return h('li', { key: i }, n); })) : null,
           h('p', { className: 'article-back' }, h('a', null, (lang === 'ar' ? '→ ' : '← ') + t.all)),
           h('p', { className: 'small article-meta', dir: 'auto' },
-            get('category') ? h('a', { className: 'category-link' }, get('category')) : null,
-            get('category') ? ' · ' : null,
+            category ? h('a', { className: 'category-link' }, category) : null,
+            category ? ' · ' : null,
             t.article + ' · ' + formatDate(get('date'), lang)),
           get('series') ? h('p', { className: 'article-series', dir: 'auto' }, t.series + ': ' + get('series') +
             (get('series_order') ? ' · ' + t.part + ' ' + get('series_order') : '')) : null,
