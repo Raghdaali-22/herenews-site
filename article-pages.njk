@@ -27,7 +27,7 @@ eleventyComputed:
 <div class="article-layout{% if hasAside %} has-aside{% endif %}">
 <article class="publication-article lang-{{ lang }}"{% if lang == 'ar' %} lang="ar" dir="rtl"{% elif lang == 'en' %} lang="en"{% endif %}>
 
-  <p dir="{% if lang == 'ar' %}rtl{% else %}auto{% endif %}" class="article-back"><a href="/publications/">{% if lang == 'ar' %}→{% else %}←{% endif %} {{ 'all' | label(lang) }}</a></p>
+  <p dir="{% if lang == 'ar' %}rtl{% else %}auto{% endif %}" class="article-back"><a href="/">{% if lang == 'ar' %}→{% else %}←{% endif %} {{ 'all' | label(lang) }}</a></p>
 
   <p dir="{% if lang == 'ar' %}rtl{% else %}auto{% endif %}" class="small article-meta">
     {%- if d.category %}<a class="category-link" href="/publications/category/{{ d.category | taxonomySlug }}/">{{ d.category | escape }}</a> · {% endif -%}

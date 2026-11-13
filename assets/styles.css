@@ -245,7 +245,6 @@ input[type="email"], input[type="text"]{
 input::placeholder{ color: rgba(0,0,0,.45); }
 
 .notice{
-  border-left: 3px solid rgba(0,0,0,.35);
   padding: 12px 14px;
   background: rgba(255,255,255,.40);
   border-radius: 12px;
@@ -610,8 +609,7 @@ article,
 .gallery-item figcaption{ font-size: 14px; }
 
 /* Pull quotes */
-.block-quote{ margin: 40px 0; padding: 4px 0 4px 24px; border-inline-start: 4px solid var(--text); }
-[dir="rtl"] .block-quote{ padding: 4px 24px 4px 0; }
+.block-quote{ margin: 40px 0; }
 .block-quote blockquote{ margin:0; }
 .block-quote blockquote p{
   font-size: clamp(24px, 3vw, 30px);
@@ -683,3 +681,5 @@ article,
   .taxonomy-nav .pill{ white-space: nowrap; }
 }
 .publication-card img, .featured-card img{ margin: 0; }
+.featured{ margin-bottom: 34px; }
+.latest-title{ margin: 0 0 16px; }

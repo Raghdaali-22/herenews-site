@@ -1,9 +1,34 @@
 ---
 layout: layout.njk
 title: Publications
-permalink: /publications/index.html
+fullTitle: "Here News — Stories worth telling"
+description: "Articles, documentaries, videos and audio from Here News, by journalist Ali Gamal."
+permalink: /index.html
+eleventyExcludeFromCollections: true
 ---
 <section class="publication-heading"><span class="kicker"><span class="dot"></span> Here News publications</span><h1>Stories worth telling.</h1><p class="lede">Articles, documentaries, videos and audio projects.</p></section>
+{%- set featuredItems = collections.featured | head(3) %}
+{%- if featuredItems.length %}
+<section class="featured" aria-labelledby="featured-title">
+  <h2 id="featured-title" class="featured-title">Featured</h2>
+  <div class="featured-grid count-{{ featuredItems.length }}">
+    {%- for item in featuredItems %}
+    {%- set itemLang = item.data | pubLang %}
+    <article class="card featured-card{% if loop.first %} featured-lead{% endif %}"{% if itemLang == 'ar' %} lang="ar" dir="rtl"{% endif %}>
+      {% if item.data.image %}<a href="{{ item | pubUrl }}"><img src="{{ item.data.image | escape }}" alt="" loading="lazy"></a>{% endif %}
+      <p dir="{% if itemLang == 'ar' %}rtl{% else %}auto{% endif %}" class="small publication-meta">
+        {%- if item.data.category %}<a class="category-link" href="/publications/category/{{ item.data.category | taxonomySlug }}/">{{ item.data.category | escape }}</a> · {% endif -%}
+        {{ item | kindLabel(itemLang) }} · {{ item.data.date | shortDate(itemLang) }}
+      </p>
+      <h3><a href="{{ item | pubUrl }}">{{ item.data.title | escape }}</a></h3>
+      {% if item.data.subtitle %}<p class="publication-card-subtitle">{{ item.data.subtitle | escape }}</p>{% endif %}
+      <p class="small">{{ 'by' | label(itemLang) }} {{ item.data.author | default('Here News') | escape }}</p>
+    </article>
+    {%- endfor %}
+  </div>
+</section>
+<h2 class="featured-title latest-title">Latest</h2>
+{%- endif %}
 {% include "taxonomy-nav.njk" %}
 {% set listingItems = collections.publications %}{% set listingContext = { general: true } %}
 {% include "publication-list.njk" %}

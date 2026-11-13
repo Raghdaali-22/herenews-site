@@ -1,6 +1,6 @@
 {%- if collections.categoryList.length or collections.series.length %}
 <nav class="taxonomy-nav" aria-label="Browse publications">
-  <a class="pill{% if not activeTaxonomy %} active{% endif %}" href="/publications/">All</a>
+  <a class="pill{% if not activeTaxonomy %} active{% endif %}" href="/">All</a>
   {%- for cat in collections.categoryList %}
   <a class="pill{% if activeTaxonomy == 'category:' + cat.slug %} active{% endif %}" href="/publications/category/{{ cat.slug }}/">{{ cat.name | escape }}</a>
   {%- endfor %}
