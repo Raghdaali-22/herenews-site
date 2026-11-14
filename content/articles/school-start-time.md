@@ -15,12 +15,10 @@ description: >+
 
 featured: false
 author: Ali Gamal
-image: /assets/uploads/fcps-start-times-infographic.png
+image: /assets/uploads/8o47djbr.jpg
 image_size: medium
 ads: true
 ---
-
-
 SPRINGFIELD, Va. — Springfield's youngest students would start class at 7:30 a.m. and its middle schoolers would not be dismissed until 4:05 p.m. under the option Fairfax County school officials have developed in the most detail as they move toward a December vote on when the county's more than 176,000 students begin their day.
 
 The proposal, presented to the School Board at a work session Nov. 10, would invert the county's long-standing bell order — elementary schools first, high schools next, middle schools last — and reshuffle the morning for tens of thousands of families in Springfield and across Fairfax County.
@@ -30,6 +28,10 @@ At West Springfield and John R. Lewis high schools, both of which ring their fir
 The board is scheduled to vote Dec. 17 on a plan for the 2027-28 school year, following a formal briefing Dec. 3.
 
 **A $1.69 million price tag, or nothing**
+
+
+
+![](/assets/uploads/fcps-start-times-infographic.png)
 
 The elementary-first option would cost about $1.69 million a year, almost entirely for 20 additional drivers at $84,389 each in salary and benefits. It requires no new buses, operating within the existing fleet. District staff contrasted it with earlier scenarios built on 80-minute tier intervals that would have required 75 to 150 additional buses, at $6.4 million to $17.3 million annually.
 
@@ -72,3 +74,5 @@ The board voted Oct. 23, 2025, to postpone any divisionwide change until no earl
 For Springfield families, the choice comes down to which clock moves. Elementary-first buys middle schoolers nearly two extra hours of morning and costs $1.69 million. The 30-minute option costs nothing and keeps everyone closer to current routines — but leaves 8 a.m. middle school bells and 3:45 p.m. elementary dismissals. Doing nothing preserves the county's early adolescent start times, and its darkest bus stops.
 
 Two open items worth noting before this runs: the deck's monthly bar charts have no underlying data table in the PDF, so any story that quantifies month-by-month exposure would need the raw dataset from FCPS transportation. And I've quoted only Moon, whose text you supplied — no staff or board member is quoted because the presentation contains no direct statements.
+
+![]()
