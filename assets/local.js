@@ -1,5 +1,5 @@
-/* Here News, localised: "Here News" becomes "Here Springfield" (or the
- * reader's city) and stories from the reader's area move to the top.
+/* Here News, localised: the homepage headline becomes "Here Springfield."
+ * (or the reader's city) and stories from the reader's area move to the top.
  *
  * Where the reader is comes from, in order:
  *   1. the area they picked in the "Local stories" menu (remembered on this device);
@@ -80,9 +80,12 @@
     });
   }
 
-  function setBrand(name) {
-    var spans = document.querySelectorAll('[data-here-place]');
-    for (var i = 0; i < spans.length; i++) spans[i].textContent = name || 'News';
+  // On the homepage, "Stories worth telling." becomes "Here Springfield."
+  function setHeadline(name) {
+    var h = document.querySelector('[data-here-headline]');
+    if (!h) return;
+    if (!h.hasAttribute('data-default')) h.setAttribute('data-default', h.textContent);
+    h.textContent = name ? 'Here ' + name + '.' : h.getAttribute('data-default');
   }
 
   // Local stories first (pinned stories keep their place at the very top).
@@ -142,7 +145,7 @@
     getJSON('/data/locations.json', 3000).then(function (data) {
       var locations = (data && data.locations) || [];
       return resolvePlace(locations).then(function (place) {
-        setBrand(place.name);
+        setHeadline(place.name);
         var grid = document.querySelector('[data-local-grid]');
         if (grid && place.covered) reorder(grid, place.covered);
         var bar = document.querySelector('[data-local-bar]');

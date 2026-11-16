@@ -345,6 +345,8 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addFilter("taxonomySlug", slugify);
   eleventyConfig.addFilter("asList", asList);
   eleventyConfig.addFilter("head", (items, n) => asList(items).slice(0, n));
+  // Plain text of a story (body + content blocks) for the site search index.
+  eleventyConfig.addFilter("searchText", item => plainText(bodyOf(item)).slice(0, 6000));
   eleventyConfig.addFilter("newestFirst", items =>
     asList(items).slice().sort((a, b) => new Date(b.data.date || 0) - new Date(a.data.date || 0)));
   // Items published within the last `hours` hours of this build (Google News sitemaps cover 2 days).

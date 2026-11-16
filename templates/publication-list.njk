@@ -1,6 +1,28 @@
 {#- Grid of publication cards with a sponsored listing slot. Expects: listingItems, listingContext -#}
 {%- set listingAds = collections.advertisements | adsFor(listingContext, 'listing', 3) %}
 {% if listingItems.length %}
+<form class="finder" data-finder role="search" hidden onsubmit="return false">
+  <label class="finder-search">
+    <span class="visually-hidden">Search stories</span>
+    <input type="search" name="q" placeholder="Search stories, topics, places, people…" autocomplete="off" data-finder-q>
+  </label>
+  <label class="finder-date">
+    <span class="visually-hidden">Published</span>
+    <select name="when" data-finder-when>
+      <option value="">Any time</option>
+      <option value="1">Past 24 hours</option>
+      <option value="7">Past week</option>
+      <option value="30">Past month</option>
+      <option value="365">Past year</option>
+      <option value="range">Pick dates…</option>
+    </select>
+  </label>
+  <span class="finder-range" data-finder-range hidden>
+    <label>From <input type="date" name="from" data-finder-from></label>
+    <label>To <input type="date" name="to" data-finder-to></label>
+  </span>
+  <p class="finder-status small" data-finder-status aria-live="polite"></p>
+</form>
 <div class="local-bar" data-local-bar hidden></div>
 <div class="publication-grid" data-local-grid>
 {%- for item in listingItems %}
@@ -10,4 +32,5 @@
 {%- endif %}
 {%- endfor %}
 </div>
+<div class="card finder-empty" data-finder-empty hidden><p>No stories match your search. Try other words or a wider date range.</p></div>
 {% else %}<div class="card"><p>Publications will appear here as they are published.</p></div>{% endif %}

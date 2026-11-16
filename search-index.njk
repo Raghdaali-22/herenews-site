@@ -1,0 +1,9 @@
+---
+permalink: /search-index.json
+eleventyExcludeFromCollections: true
+---
+[
+{%- for item in collections.publications %}
+  {"url": {{ item | pubUrl | json | safe }}, "date": {{ item.data.date | isoDate | json | safe }}, "title": {{ item.data.title | default('') | json | safe }}, "subtitle": {{ item.data.subtitle | default('') | json | safe }}, "description": {{ item.data.description | default('') | json | safe }}, "category": {{ item.data.category | default('') | json | safe }}, "topics": {{ item.data.topics | asList | json | safe }}, "location": {{ item.data.location | default('') | json | safe }}, "author": {{ item.data.author | default('') | json | safe }}, "text": {{ item | searchText | json | safe }}}{% if not loop.last %},{% endif %}
+{%- endfor %}
+]

@@ -698,3 +698,47 @@ article,
   display: inline-block; margin-right: 8px; padding: 1px 8px; border-radius: 999px;
   background: rgba(0,0,0,.86); color: #fff; font-size: 12px; letter-spacing: .02em;
 }
+
+/* "Live" dot: green and gently pulsing, like a recording light */
+.dot-live{
+  background: #1f9d55;
+  box-shadow: 0 0 0 0 rgba(31,157,85,.55);
+  animation: here-live 1.8s ease-out infinite;
+}
+@keyframes here-live{
+  0%{ box-shadow: 0 0 0 0 rgba(31,157,85,.55); }
+  70%{ box-shadow: 0 0 0 7px rgba(31,157,85,0); }
+  100%{ box-shadow: 0 0 0 0 rgba(31,157,85,0); }
+}
+@media (prefers-reduced-motion: reduce){ .dot-live{ animation: none; } }
+
+/* Anything marked hidden stays hidden, even if a class sets display */
+[hidden]{ display: none !important; }
+.visually-hidden{
+  position: absolute !important; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* Search and date filter */
+.finder{
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+  margin: -6px 0 18px;
+}
+.finder input, .finder select{
+  font: inherit; font-size: 16px; color: var(--text);
+  border: 1px solid rgba(0,0,0,.18); background: rgba(255,255,255,.7);
+  border-radius: 999px; padding: 10px 16px; outline: none;
+  min-height: 46px; box-sizing: border-box;
+}
+.finder input:focus, .finder select:focus{ border-color: rgba(0,0,0,.55); background: #fff; }
+.finder-search{ flex: 1 1 320px; display: flex; }
+.finder-search input{ width: 100%; min-width: 0; }
+.finder-range{ display: inline-flex; flex-wrap: wrap; gap: 8px; }
+.finder-range label{ display: inline-flex; align-items: center; gap: 6px; font-size: 15px; color: var(--muted); }
+.finder-range input{ padding: 8px 12px; }
+.finder-status{ margin: 0; flex-basis: 100%; min-height: 1em; }
+.finder-status:empty{ display: none; }
+.finder-empty{ margin-top: 4px; }
+@media (max-width: 560px){
+  .finder-date, .finder-date select{ width: 100%; }
+}
