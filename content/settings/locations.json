@@ -3,9 +3,375 @@
     {
       "name": "Springfield",
       "region": "VA",
-      "aliases": ["Springfield, VA", "Springfield, Va.", "Fairfax County"],
+      "aliases": [
+        "West Springfield",
+        "North Springfield"
+      ],
       "point": "{\"type\":\"Point\",\"coordinates\":[-77.1872,38.7893]}",
-      "radius_km": 40
+      "radius_km": 8
+    },
+    {
+      "name": "Alexandria",
+      "region": "VA",
+      "aliases": [
+        "Old Town Alexandria"
+      ],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.0469,38.8048]}",
+      "radius_km": 8
+    },
+    {
+      "name": "Arlington",
+      "region": "VA",
+      "aliases": [
+        "Crystal City",
+        "Rosslyn",
+        "Clarendon",
+        "Ballston",
+        "Pentagon City"
+      ],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.091,38.8816]}",
+      "radius_km": 8
+    },
+    {
+      "name": "Fairfax",
+      "region": "VA",
+      "aliases": [
+        "City of Fairfax",
+        "Fairfax City"
+      ],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.3064,38.8462]}",
+      "radius_km": 8
+    },
+    {
+      "name": "Falls Church",
+      "region": "VA",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.1711,38.8823]}",
+      "radius_km": 5
+    },
+    {
+      "name": "Annandale",
+      "region": "VA",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.1964,38.8304]}",
+      "radius_km": 6
+    },
+    {
+      "name": "Burke",
+      "region": "VA",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.2717,38.7935]}",
+      "radius_km": 6
+    },
+    {
+      "name": "Lorton",
+      "region": "VA",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.2278,38.7043]}",
+      "radius_km": 7
+    },
+    {
+      "name": "Franconia",
+      "region": "VA",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.1464,38.7821]}",
+      "radius_km": 5
+    },
+    {
+      "name": "Kingstowne",
+      "region": "VA",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.138,38.774]}",
+      "radius_km": 4
+    },
+    {
+      "name": "Mount Vernon",
+      "region": "VA",
+      "aliases": [
+        "Hybla Valley"
+      ],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.1067,38.719]}",
+      "radius_km": 7
+    },
+    {
+      "name": "Fort Belvoir",
+      "region": "VA",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.1459,38.7119]}",
+      "radius_km": 5
+    },
+    {
+      "name": "McLean",
+      "region": "VA",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.1773,38.9339]}",
+      "radius_km": 7
+    },
+    {
+      "name": "Tysons",
+      "region": "VA",
+      "aliases": [
+        "Tysons Corner"
+      ],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.2311,38.9187]}",
+      "radius_km": 5
+    },
+    {
+      "name": "Vienna",
+      "region": "VA",
+      "aliases": [
+        "Vienna, VA",
+        "Vienna, Va."
+      ],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.2653,38.9012]}",
+      "radius_km": 5
+    },
+    {
+      "name": "Oakton",
+      "region": "VA",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.3008,38.881]}",
+      "radius_km": 5
+    },
+    {
+      "name": "Reston",
+      "region": "VA",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.357,38.9586]}",
+      "radius_km": 7
+    },
+    {
+      "name": "Herndon",
+      "region": "VA",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.3861,38.9696]}",
+      "radius_km": 6
+    },
+    {
+      "name": "Chantilly",
+      "region": "VA",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.4311,38.8943]}",
+      "radius_km": 7
+    },
+    {
+      "name": "Centreville",
+      "region": "VA",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.4289,38.8404]}",
+      "radius_km": 7
+    },
+    {
+      "name": "Great Falls",
+      "region": "VA",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.2886,39.0007]}",
+      "radius_km": 7
+    },
+    {
+      "name": "Ashburn",
+      "region": "VA",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.4874,39.0438]}",
+      "radius_km": 8
+    },
+    {
+      "name": "Sterling",
+      "region": "VA",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.4286,39.0062]}",
+      "radius_km": 7
+    },
+    {
+      "name": "Leesburg",
+      "region": "VA",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.5636,39.1157]}",
+      "radius_km": 10
+    },
+    {
+      "name": "Manassas",
+      "region": "VA",
+      "aliases": [
+        "Manassas Park"
+      ],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.4753,38.7509]}",
+      "radius_km": 9
+    },
+    {
+      "name": "Woodbridge",
+      "region": "VA",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.2497,38.6582]}",
+      "radius_km": 9
+    },
+    {
+      "name": "Dale City",
+      "region": "VA",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.3111,38.6371]}",
+      "radius_km": 7
+    },
+    {
+      "name": "DC",
+      "region": "DC",
+      "aliases": [
+        "Washington, DC",
+        "Washington, D.C.",
+        "D.C.",
+        "District of Columbia"
+      ],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.0369,38.9072]}",
+      "radius_km": 10
+    },
+    {
+      "name": "Bethesda",
+      "region": "MD",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.1003,38.9807]}",
+      "radius_km": 6
+    },
+    {
+      "name": "Chevy Chase",
+      "region": "MD",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.0764,38.9819]}",
+      "radius_km": 4
+    },
+    {
+      "name": "Silver Spring",
+      "region": "MD",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.0261,38.9907]}",
+      "radius_km": 7
+    },
+    {
+      "name": "Takoma Park",
+      "region": "MD",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.0075,38.9779]}",
+      "radius_km": 4
+    },
+    {
+      "name": "Wheaton",
+      "region": "MD",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.0553,39.0398]}",
+      "radius_km": 6
+    },
+    {
+      "name": "Rockville",
+      "region": "MD",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.1528,39.084]}",
+      "radius_km": 8
+    },
+    {
+      "name": "Gaithersburg",
+      "region": "MD",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.2014,39.1434]}",
+      "radius_km": 8
+    },
+    {
+      "name": "Germantown",
+      "region": "MD",
+      "aliases": [
+        "Germantown, MD",
+        "Germantown, Md."
+      ],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.2717,39.1732]}",
+      "radius_km": 8
+    },
+    {
+      "name": "College Park",
+      "region": "MD",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-76.9369,38.9807]}",
+      "radius_km": 6
+    },
+    {
+      "name": "Hyattsville",
+      "region": "MD",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-76.9455,38.9559]}",
+      "radius_km": 5
+    },
+    {
+      "name": "Greenbelt",
+      "region": "MD",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-76.8755,39.0046]}",
+      "radius_km": 6
+    },
+    {
+      "name": "Laurel",
+      "region": "MD",
+      "aliases": [
+        "Laurel, MD",
+        "Laurel, Md."
+      ],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-76.8483,39.0993]}",
+      "radius_km": 8
+    },
+    {
+      "name": "Bowie",
+      "region": "MD",
+      "aliases": [
+        "Bowie, MD",
+        "Bowie, Md."
+      ],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-76.7302,38.9426]}",
+      "radius_km": 9
+    },
+    {
+      "name": "Largo",
+      "region": "MD",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-76.8303,38.8976]}",
+      "radius_km": 6
+    },
+    {
+      "name": "Upper Marlboro",
+      "region": "MD",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-76.7497,38.8159]}",
+      "radius_km": 8
+    },
+    {
+      "name": "Oxon Hill",
+      "region": "MD",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-76.9897,38.8034]}",
+      "radius_km": 5
+    },
+    {
+      "name": "National Harbor",
+      "region": "MD",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.0172,38.7826]}",
+      "radius_km": 3
+    },
+    {
+      "name": "Fort Washington",
+      "region": "MD",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-77.023,38.7073]}",
+      "radius_km": 6
+    },
+    {
+      "name": "Waldorf",
+      "region": "MD",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-76.9391,38.6246]}",
+      "radius_km": 9
+    },
+    {
+      "name": "Annapolis",
+      "region": "MD",
+      "aliases": [],
+      "point": "{\"type\":\"Point\",\"coordinates\":[-76.4922,38.9784]}",
+      "radius_km": 9
     }
   ]
 }

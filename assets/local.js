@@ -65,18 +65,17 @@
   // Decide what to call the reader's place, and whether we cover it.
   function resolvePlace(locations) {
     var choice = read(CHOICE_KEY);
-    if (choice === EVERYWHERE) return Promise.resolve({ name: '', covered: null, chosen: true });
+    if (choice === EVERYWHERE) return Promise.resolve({ name: '', covered: null, point: null, chosen: true });
     if (choice) {
       var picked = findLocation(locations, choice);
-      if (picked) return Promise.resolve({ name: picked.name, covered: picked, chosen: true });
+      if (picked) return Promise.resolve({ name: picked.name, covered: picked, point: window.HereSmart.pointOf(picked), chosen: true });
     }
     return detect().then(function (geo) {
-      if (!geo) return { name: '', covered: null };
-      var near = isFinite(geo.lat) && isFinite(geo.lng)
-        ? window.HereSmart.nearestLocation({ lat: geo.lat, lng: geo.lng }, locations)
-        : null;
-      if (near) return { name: near.location.name, covered: near.location };
-      return { name: geo.city, covered: null };
+      if (!geo) return { name: '', covered: null, point: null };
+      var point = isFinite(geo.lat) && isFinite(geo.lng) ? { lat: geo.lat, lng: geo.lng } : null;
+      var near = point ? window.HereSmart.nearestLocation(point, locations) : null;
+      if (near) return { name: near.location.name, covered: near.location, point: point };
+      return { name: geo.city, covered: null, point: point };
     });
   }
 
@@ -88,15 +87,30 @@
     h.textContent = name ? 'Here ' + name + '.' : h.getAttribute('data-default');
   }
 
-  // Local stories first (pinned stories keep their place at the very top).
-  function reorder(grid, covered) {
+  // Stories within this distance of the reader count as "near you", so a
+  // reader in Alexandria also sees Springfield stories first.
+  var NEARBY_KM = 20;
+
+  // Local stories first, nearest first (pinned stories keep the very top).
+  function reorder(grid, place, locations) {
     var cards = Array.prototype.slice.call(grid.querySelectorAll('.publication-card[data-location]'));
     if (!cards.length) return;
     var pinned = [], local = [], rest = [];
+    var distance = {};
     cards.forEach(function (card) {
+      var name = card.getAttribute('data-location');
+      var loc = name ? findLocation(locations, name) : null;
+      var p = loc ? window.HereSmart.pointOf(loc) : null;
+      var d = p && place.point ? window.HereSmart.distanceKm(place.point, p) : Infinity;
+      if (place.covered && window.HereSmart.sameName(name, place.covered.name)) d = 0;
+      distance[cards.indexOf(card)] = d;
       if (card.getAttribute('data-pinned') === 'true') pinned.push(card);
-      else if (covered && window.HereSmart.sameName(card.getAttribute('data-location'), covered.name)) local.push(card);
+      else if (d <= NEARBY_KM) local.push(card);
       else rest.push(card);
+    });
+    // Nearest first; stories at the same distance keep their newest-first order.
+    local.sort(function (a, b) {
+      return (distance[cards.indexOf(a)] - distance[cards.indexOf(b)]) || (cards.indexOf(a) - cards.indexOf(b));
     });
     // Tag local stories only when it tells them apart from the others.
     if (local.length < cards.length) local.forEach(function (card) {
@@ -120,11 +134,28 @@
     label.textContent = 'Local stories: ';
     var select = document.createElement('select');
     var current = place.covered ? place.covered.name : EVERYWHERE;
+    // Group by state/region (Virginia, DC, Maryland, ...), A–Z within each.
+    var REGION_NAMES = { VA: 'Virginia', DC: 'Washington, DC', MD: 'Maryland' };
+    var groups = {};
+    var order = [];
     locations.forEach(function (loc) {
-      var opt = document.createElement('option');
-      opt.value = loc.name;
-      opt.textContent = loc.name + (loc.region ? ', ' + loc.region : '');
-      select.appendChild(opt);
+      var key = loc.region || '';
+      if (!groups[key]) { groups[key] = []; order.push(key); }
+      groups[key].push(loc);
+    });
+    order.forEach(function (key) {
+      var parent = select;
+      if (key && order.length > 1) {
+        parent = document.createElement('optgroup');
+        parent.label = REGION_NAMES[key] || key;
+        select.appendChild(parent);
+      }
+      groups[key].slice().sort(function (a, b) { return a.name.localeCompare(b.name); }).forEach(function (loc) {
+        var opt = document.createElement('option');
+        opt.value = loc.name;
+        opt.textContent = loc.name + (loc.region && loc.region !== loc.name ? ', ' + loc.region : '');
+        parent.appendChild(opt);
+      });
     });
     var all = document.createElement('option');
     all.value = EVERYWHERE;
@@ -147,7 +178,7 @@
       return resolvePlace(locations).then(function (place) {
         setHeadline(place.name);
         var grid = document.querySelector('[data-local-grid]');
-        if (grid && place.covered) reorder(grid, place.covered);
+        if (grid && place.point) reorder(grid, place, locations);
         var bar = document.querySelector('[data-local-bar]');
         if (bar) renderBar(bar, locations, place);
       });
