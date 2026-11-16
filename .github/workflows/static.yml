@@ -23,6 +23,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # Full history so the notify step can see which stories changed.
+          fetch-depth: 0
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -40,3 +43,12 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Tell search engines about new and updated stories
+        if: github.event_name == 'push'
+        continue-on-error: true
+        env:
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+          # Public by design: the same key is served at /<key>.txt.
+          INDEXNOW_KEY: b1d17cb8aa035d71d981828fad0e5fa2
+        run: node scripts/notify-search-engines.mjs

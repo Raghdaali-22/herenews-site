@@ -269,6 +269,8 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("favicon.png");
   eleventyConfig.addPassthroughCopy("CNAME");
   eleventyConfig.addPassthroughCopy("robots.txt");
+  // IndexNow key file: proves to Bing & co. that pings for this site come from us.
+  eleventyConfig.addPassthroughCopy("b1d17cb8aa035d71d981828fad0e5fa2.txt");
   // Settings the editor preview and the reader's browser also read.
   eleventyConfig.addPassthroughCopy({ "content/settings": "data" });
   eleventyConfig.addGlobalData("settings", SETTINGS);
@@ -343,6 +345,16 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addFilter("taxonomySlug", slugify);
   eleventyConfig.addFilter("asList", asList);
   eleventyConfig.addFilter("head", (items, n) => asList(items).slice(0, n));
+  eleventyConfig.addFilter("newestFirst", items =>
+    asList(items).slice().sort((a, b) => new Date(b.data.date || 0) - new Date(a.data.date || 0)));
+  // Items published within the last `hours` hours of this build (Google News sitemaps cover 2 days).
+  eleventyConfig.addFilter("publishedWithin", (items, hours) => {
+    const since = Date.now() - hours * 3600 * 1000;
+    return asList(items).filter(item => {
+      const t = toTime(item.data.date);
+      return t !== null && t >= since && t <= Date.now() + 3600 * 1000;
+    });
+  });
   eleventyConfig.addFilter("pubUrl", pubUrl);
   eleventyConfig.addFilter("pubSlug", pubSlug);
   eleventyConfig.addFilter("pageSlug", pageSlug);

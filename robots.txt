@@ -3,3 +3,4 @@ Allow: /
 Disallow: /admin/
 
 Sitemap: https://herenews.net/sitemap.xml
+Sitemap: https://herenews.net/news-sitemap.xml

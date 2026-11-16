@@ -1,0 +1,28 @@
+---
+permalink: /feed.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Here News</title>
+  <subtitle>Independent reporting by Ali Gamal.</subtitle>
+  <link href="{{ site.url }}/feed.xml" rel="self" type="application/atom+xml"/>
+  <link href="https://pubsubhubbub.appspot.com/" rel="hub"/>
+  <link href="{{ site.url }}/"/>
+  <id>{{ site.url }}/</id>
+  {%- set feedItems = collections.publications | newestFirst | head(30) %}
+  <updated>{% if feedItems.length %}{{ feedItems[0].data.date | isoDate }}{% endif %}</updated>
+{%- for item in feedItems %}
+  {%- set itemUrl = site.url + (item | pubUrl) %}
+  <entry>
+    <title>{{ item.data.title }}</title>
+    <link href="{{ itemUrl }}"/>
+    <id>{{ itemUrl }}</id>
+    <published>{{ item.data.date | isoDate }}</published>
+    <updated>{{ item.data.date | isoDate }}</updated>
+    <author><name>{{ item.data.author | default('Here News') }}</name></author>
+    {%- if item.data.category %}<category term="{{ item.data.category }}"/>{% endif %}
+    <summary>{{ (item.data.subtitle or item.data.description) | default('') }}</summary>
+  </entry>
+{%- endfor %}
+</feed>

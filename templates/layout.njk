@@ -11,6 +11,7 @@
   {%- set shareImage = (ogImage or '/favicon.png') | absoluteUrl(site.url) %}
   <meta name="description" content="{{ metaDescription | escape }}">
   <link rel="canonical" href="{{ canonical }}">
+  <link rel="alternate" type="application/atom+xml" title="Here News" href="/feed.xml">
   <meta property="og:site_name" content="Here News">
   <meta property="og:type" content="{{ ogType | default('website') }}">
   <meta property="og:title" content="{{ title | default('Publications') | escape }}">

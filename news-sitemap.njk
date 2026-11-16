@@ -1,0 +1,17 @@
+---
+permalink: /news-sitemap.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+{%- for item in collections.publications | newestFirst | publishedWithin(48) %}
+  <url>
+    <loc>{{ site.url }}{{ item | pubUrl }}</loc>
+    <news:news>
+      <news:publication><news:name>Here News</news:name><news:language>{% if (item.data | pubLang) == 'ar' %}ar{% else %}en{% endif %}</news:language></news:publication>
+      <news:publication_date>{{ item.data.date | isoDate }}</news:publication_date>
+      <news:title>{{ item.data.title }}</news:title>
+    </news:news>
+  </url>
+{%- endfor %}
+</urlset>
