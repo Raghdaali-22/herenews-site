@@ -274,6 +274,17 @@ module.exports = function(eleventyConfig) {
   // Settings the editor preview and the reader's browser also read.
   eleventyConfig.addPassthroughCopy({ "content/settings": "data" });
   eleventyConfig.addGlobalData("settings", SETTINGS);
+  // Writers with a profile page: bylines link there, and search engines are
+  // told it's the same person as the listed profiles (sameAs).
+  const AUTHORS = {
+    "ali gamal": {
+      url: "/about.html",
+      sameAs: ["https://www.linkedin.com/in/ali-gamal-journalist/"]
+    }
+  };
+  const authorOf = name => AUTHORS[String(name || "").trim().toLowerCase()] || null;
+  eleventyConfig.addFilter("authorUrl", name => (authorOf(name) || {}).url || "");
+  eleventyConfig.addFilter("authorSameAs", name => (authorOf(name) || {}).sameAs || []);
 
   eleventyConfig.addGlobalData("site", { url: "https://herenews.net", name: "Here News" });
   eleventyConfig.addFilter("absoluteUrl", (path, base) => {

@@ -742,3 +742,8 @@ article,
 @media (max-width: 560px){
   .finder-date, .finder-date select{ width: 100%; }
 }
+
+/* Author name links to the writer's profile */
+.article-byline a.author, .byline-link{ color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.btn-linkedin{ gap: 8px; }
+.btn-linkedin svg{ color: #0a66c2; }

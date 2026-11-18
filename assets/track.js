@@ -16,7 +16,7 @@
 (function () {
   var SITE_HOST = 'herenews.net';
   // Don't add labels to links where they're pointless or could break things.
-  var NO_UTM = /(^|\.)(google\.[a-z.]+|goo\.gl|youtube\.com|youtu\.be|facebook\.com|instagram\.com|x\.com|twitter\.com|wikipedia\.org|whatsapp\.com|wa\.me|apple\.com|github\.com|decapbridge\.com)$/i;
+  var NO_UTM = /(^|\.)(google\.[a-z.]+|goo\.gl|youtube\.com|youtu\.be|facebook\.com|instagram\.com|linkedin\.com|x\.com|twitter\.com|wikipedia\.org|whatsapp\.com|wa\.me|apple\.com|github\.com|decapbridge\.com)$/i;
 
   window.dataLayer = window.dataLayer || [];
   function send(event, data) {
