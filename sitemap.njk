@@ -8,6 +8,7 @@ eleventyExcludeFromCollections: true
   <url><loc>{{ site.url }}/here-news-project.html</loc></url>
   <url><loc>{{ site.url }}/about.html</loc></url>
   <url><loc>{{ site.url }}/project.html</loc></url>
+  <url><loc>{{ site.url }}/privacy.html</loc></url>
 {%- for item in collections.publications %}
   <url><loc>{{ site.url }}{{ item | pubUrl }}</loc>{% if item.data.date %}<lastmod>{{ item.data.date | isoDate }}</lastmod>{% endif %}</url>
 {%- endfor %}
