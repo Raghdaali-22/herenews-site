@@ -3,7 +3,7 @@
 {%- if adList and adList.length -%}
 <aside class="ad-slot ad-slot--{{ adSlot }}" data-ad-slot="{{ adSlot }}" aria-label="{{ 'advertisement' | label(adLang) }}" hidden>
   {%- for ad in adList %}
-  <div class="ad" data-ad-id="{{ ad.id }}" data-ad-start="{{ ad.start | isoDate }}" data-ad-end="{{ ad.end | isoDate }}" hidden>
+  <div class="ad" data-ad-id="{{ ad.id }}" data-ad-advertiser="{{ ad.advertiser | default(ad.title) | escape }}" data-ad-start="{{ ad.start | isoDate }}" data-ad-end="{{ ad.end | isoDate }}" hidden>
     <p class="ad-label">{{ 'advertisement' | label(adLang) }} · {{ 'sponsoredBy' | label(adLang) }} {{ ad.advertiser | default(ad.title) | escape }}</p>
     <a class="ad-link" href="{{ ad.url | escape }}" target="_blank" rel="sponsored noopener noreferrer">
       <img class="ad-creative" src="{{ ad.image | escape }}" alt="{{ ad.image_alt | default(ad.advertiser) | default('') | escape }}" loading="lazy">

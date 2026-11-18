@@ -1,7 +1,9 @@
 /* Here News ad slots: shows the best candidate whose campaign is running now.
  * Candidates are already ranked (priority, then relevance) at build time;
  * this only applies start/end dates so campaigns switch on and off by
- * themselves between site rebuilds. No tracking, no cookies. */
+ * themselves between site rebuilds. Ad views and clicks are counted by
+ * /assets/track.js (Google Analytics); ads are matched to the article, not to
+ * the reader. */
 (function () {
   function run() {
     var now = Date.now();

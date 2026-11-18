@@ -5,7 +5,7 @@
  *   1. the area they picked in the "Local stories" menu (remembered on this device);
  *   2. an approximate, city-level lookup of their IP address (get.geojs.io),
  *      skipped when the browser sends Do Not Track / Global Privacy Control.
- * Nothing is sent to Here News and nothing is stored anywhere but the
+ * The reader's location is not sent to Here News; it is only kept in the
  * reader's own browser. Covered areas are listed in Site Settings → Locations. */
 (function () {
   var CHOICE_KEY = 'here.place';
