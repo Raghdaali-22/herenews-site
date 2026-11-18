@@ -22,7 +22,7 @@ eleventyExcludeFromCollections: true
       </p>
       <h3><a href="{{ item | pubUrl }}">{{ item.data.title | escape }}</a></h3>
       {% if item.data.subtitle %}<p class="publication-card-subtitle">{{ item.data.subtitle | escape }}</p>{% endif %}
-      <p class="small">{{ 'by' | label(itemLang) }} {{ item.data.author | default('Here News') | escape }}</p>
+      <p class="small">{{ 'by' | label(itemLang) }} {% set authorName = item.data.author | default('Here News') %}{% if authorName | authorUrl %}<a class="byline-link" href="{{ authorName | authorUrl }}" rel="author">{{ authorName | escape }}</a>{% else %}{{ authorName | escape }}{% endif %}</p>
     </article>
     {%- endfor %}
   </div>

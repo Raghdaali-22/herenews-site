@@ -10,6 +10,6 @@
 <h2><a href="{{ itemUrl }}">{{ item.data.title | escape }}</a></h2>
 {% if item.data.subtitle %}<p class="publication-card-subtitle">{{ item.data.subtitle | escape }}</p>{% endif %}
 {% for para in item.data.description | default('') | paragraphs %}<p>{{ para | escape }}</p>{% endfor %}
-<p class="small">{{ 'by' | label(itemLang) }} {{ item.data.author | default('Here News') | escape }}</p>
+<p class="small">{{ 'by' | label(itemLang) }} {% set authorName = item.data.author | default('Here News') %}{% if authorName | authorUrl %}<a class="byline-link" href="{{ authorName | authorUrl }}" rel="author">{{ authorName | escape }}</a>{% else %}{{ authorName | escape }}{% endif %}</p>
 <a class="publication-read" href="{{ itemUrl }}">{{ 'read' | label(itemLang) }}</a>
 </article>

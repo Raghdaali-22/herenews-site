@@ -1,5 +1,6 @@
 {#- Byline and attribution. Expects: d (item data), lang -#}
 <p dir="{% if lang == 'ar' %}rtl{% else %}auto{% endif %}" class="small article-byline">
-  {{ 'by' | label(lang) }} <span class="author">{{ d.author | default('Here News') | escape }}</span>
+  {%- set authorName = d.author | default('Here News') %}
+  {{ 'by' | label(lang) }} {% if authorName | authorUrl %}<a class="author" href="{{ authorName | authorUrl }}" rel="author">{{ authorName | escape }}</a>{% else %}<span class="author">{{ authorName | escape }}</span>{% endif %}
   {%- if d.source_name %} · {{ 'source' | label(lang) }}: {% if d.source_url %}<a href="{{ d.source_url | escape }}" target="_blank" rel="noopener noreferrer">{{ d.source_name | escape }}</a>{% else %}{{ d.source_name | escape }}{% endif %}{% endif %}
 </p>
