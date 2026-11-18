@@ -59,6 +59,7 @@
     var empty = document.querySelector('[data-finder-empty]');
     var extras = document.querySelectorAll('.featured, .latest-title');
     var index = null;      // url -> normalized text, loaded on first search
+    var rememberTimer;
     var loading = null;
 
     function loadIndex() {
@@ -119,7 +120,8 @@
       for (var m = 0; m < extras.length; m++) extras[m].hidden = active;
       if (empty) empty.hidden = !active || shown > 0;
       status.textContent = active ? (shown === 1 ? '1 story' : shown + ' stories') : '';
-      remember(terms.length ? q.value.trim() : '');
+      clearTimeout(rememberTimer);
+      rememberTimer = setTimeout(function () { remember(terms.length ? q.value.trim() : ''); }, 800);
     }
 
     function remember(query) {

@@ -1,6 +1,7 @@
-/* Here News measurement: sends events to Google Tag Manager's dataLayer
- * (container GTM-MR3QKXB9), where Tag Manager forwards them to Google
- * Analytics. Nothing here identifies a reader; see /privacy.html.
+/* Here News measurement: sends events straight to Google Analytics
+ * (G-ZB2RCDRFNX, loaded on every page) with gtag(). Don't also add a GA4
+ * event tag for these in Tag Manager, or they'll be counted twice.
+ * Nothing here identifies a reader; see /privacy.html.
  *
  * Events (all carry page_path):
  *   ad_impression   an ad became visible    ad_id, ad_advertiser, ad_slot
@@ -20,9 +21,8 @@
   window.dataLayer = window.dataLayer || [];
   function send(event, data) {
     data = data || {};
-    data.event = event;
     data.page_path = window.location.pathname;
-    window.dataLayer.push(data);
+    if (typeof window.gtag === 'function') window.gtag('event', event, data);
   }
   window.hereTrack = send;
 
