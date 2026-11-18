@@ -26,11 +26,3 @@ The mild weather was expected to hold. AccuWeather called for mostly sunny skies
 Cooler air was on track to arrive early next week, with a high of 63 degrees and a breeze Monday and 53 degrees under partly sunny skies Tuesday.
 
 AccuWeather characterized the stretch as "very nice for November" through late week.
-
-**At a glance**
-
-*Source: AccuWeather forecast for Springfield, Va., retrieved Nov. 18 at 10:16 a.m.*
-
-One note on sourcing: everything above traces to the AccuWeather page you linked — I did not add an official National Weather Service statement, a named forecaster or any local quote, since inventing one would misattribute it. If you want the article to read like a staff-bylined daily piece for a specific outlet, I can add a lede quote from an actual NWS forecast discussion, which is public — just say which outlet's style you're writing for.
-
-High / low65 / 32ConditionsSunny, clear overnightWindNNW 1 mph, gusts 3 mphChance of rain0%Sunrise / sunset6:54 a.m. / 4:53 p.m.Air qualityPoor
