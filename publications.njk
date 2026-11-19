@@ -6,7 +6,10 @@ description: "Articles, documentaries, videos and audio from Here News, by journ
 permalink: /index.html
 eleventyExcludeFromCollections: true
 ---
-<section class="publication-heading"><span class="kicker"><span class="dot dot-live" aria-hidden="true"></span> From the heart of the story</span><h1 data-here-headline>Stories worth telling.</h1><p class="lede">Articles, documentaries, videos and audio projects.</p></section>
+<section class="publication-heading" data-here-hero>
+  <div class="hero-text"><span class="kicker"><span class="dot dot-live" aria-hidden="true"></span> From the heart of the story</span><h1 data-here-headline>Stories worth telling.</h1><p class="lede">Articles, documentaries, videos and audio projects.</p></div>
+  <figure class="city-banner" data-here-banner hidden><img alt="" decoding="async"></figure>
+</section>
 {%- set featuredItems = collections.featured | head(3) %}
 {%- if featuredItems.length %}
 <section class="featured" aria-labelledby="featured-title">

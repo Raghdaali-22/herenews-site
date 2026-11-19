@@ -87,6 +87,20 @@
     h.textContent = name ? 'Here ' + name + '.' : h.getAttribute('data-default');
   }
 
+  // Show the city's banner (Site Settings → Locations → Banner image) next to
+  // the headline, only once the picture has loaded so nothing jumps around.
+  function setBanner(location) {
+    var figure = document.querySelector('[data-here-banner]');
+    var hero = document.querySelector('[data-here-hero]');
+    if (!figure || !hero) return;
+    var src = location && location.banner;
+    if (!src) { figure.hidden = true; hero.classList.remove('has-banner'); return; }
+    var img = figure.querySelector('img');
+    img.onload = function () { figure.hidden = false; hero.classList.add('has-banner'); };
+    img.alt = location.name + (location.region ? ', ' + location.region : '');
+    img.src = src;
+  }
+
   // Stories within this distance of the reader count as "near you", so a
   // reader in Alexandria also sees Springfield stories first.
   var NEARBY_KM = 20;
@@ -177,6 +191,7 @@
       var locations = (data && data.locations) || [];
       return resolvePlace(locations).then(function (place) {
         setHeadline(place.name);
+        setBanner(place.covered);
         var grid = document.querySelector('[data-local-grid]');
         if (grid && place.point) reorder(grid, place, locations);
         var bar = document.querySelector('[data-local-bar]');
