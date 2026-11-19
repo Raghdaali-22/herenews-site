@@ -25,5 +25,3 @@ The forecast offered one caveat for those heading outdoors: air quality was rate
 The mild weather was expected to hold. AccuWeather called for mostly sunny skies and a high of 66 degrees Thursday, then a warm 70 degrees with plenty of sun Friday. High clouds and a high of 64 were forecast Saturday, followed by a 55% chance of afternoon rain Sunday with a high of 61.
 
 Cooler air was on track to arrive early next week, with a high of 63 degrees and a breeze Monday and 53 degrees under partly sunny skies Tuesday.
-
-AccuWeather characterized the stretch as "very nice for November" through late week.
