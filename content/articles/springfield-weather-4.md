@@ -6,10 +6,11 @@ language: bilingual
 featured: false
 pinned: false
 author: Ali Gamal
+image: /assets/uploads/20261118_140611.jpg
 image_size: medium
 ads: true
 ---
-**SPRINGFIELD, Va. (AP)** — A clear, mild November day settled over Springfield on Wednesday, with forecasters calling for plenty of sunshine and a high of 65 degrees.
+**SPRINGFIELD, Va.** — A clear, mild November day settled over Springfield on Wednesday, with forecasters calling for plenty of sunshine and a high of 65 degrees.
 
 AccuWeather reported the temperature at 55 degrees at 10:16 a.m., under sunny skies and a light north-northwest wind of 1 mph. Gusts were measured at 3 mph. The real-feel reading was 62 degrees in direct sun and 57 degrees in shade.
 
