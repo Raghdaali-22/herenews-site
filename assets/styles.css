@@ -747,3 +747,15 @@ article,
 .article-byline a.author, .byline-link{ color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 .btn-linkedin{ gap: 8px; }
 .btn-linkedin svg{ color: #0a66c2; }
+
+/* City banner beside the homepage headline (only when the reader's city has one) */
+.city-banner{ margin: 0; }
+.city-banner img{ display: block; width: 100%; height: auto; border-radius: var(--radius); box-shadow: var(--shadow); }
+.publication-heading.has-banner .city-banner{ margin-top: 22px; }
+@media (min-width: 900px){
+  .publication-heading.has-banner{
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    gap: 40px; align-items: center;
+  }
+  .publication-heading.has-banner .city-banner{ margin-top: 0; }
+}

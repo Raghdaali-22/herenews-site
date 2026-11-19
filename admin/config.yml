@@ -503,5 +503,10 @@ collections:
                 widget: "list"
                 required: false
                 hint: "Other ways articles mention this place, separated by commas, e.g. Springfield, VA, Fairfax County. Used to detect an article's location."
+              - label: "Banner image"
+                name: "banner"
+                widget: "image"
+                required: false
+                hint: "Optional. A wide picture (about 2000 × 800) shown next to “Here <city>.” on the homepage for readers in this area. Leave empty for no banner."
               - { label: "Place on the map", name: "point", widget: "map", type: "Point", hint: "Click the city's centre on the map." }
               - { label: "Area size (km)", name: "radius_km", widget: "number", value_type: "int", default: 8, min: 2, hint: "How far the place reaches (about 5–10 km for a town). Readers get the nearest place whose area they are in; stories within 20 km of a reader count as near them." }
