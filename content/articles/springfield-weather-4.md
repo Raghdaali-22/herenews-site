@@ -6,6 +6,7 @@ language: bilingual
 featured: false
 pinned: false
 author: Ali Gamal
+image: /assets/uploads/20261118_140611.jpg
 image_size: medium
 ads: true
 ---
