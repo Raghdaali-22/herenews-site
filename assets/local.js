@@ -2,7 +2,8 @@
  * (or the reader's city) and stories from the reader's area move to the top.
  *
  * Where the reader is comes from, in order:
- *   1. the area they picked in the "Local stories" menu (remembered on this device);
+ *   1. the area they picked in the "Local stories" menu (remembered on this
+ *      device; only while the menu is switched on in Site Settings);
  *   2. an approximate, city-level lookup of their IP address (get.geojs.io),
  *      skipped when the browser sends Do Not Track / Global Privacy Control.
  * The reader's location is not sent to Here News; it is only kept in the
@@ -62,19 +63,52 @@
     return null;
   }
 
+  // A reader's position from their internet address is only approximate,
+  // often a few km off. So readers are matched to areas Here News actually
+  // has stories from first: within SNAP_KM of one, they get that area.
+  // (Mount Vernon's centre is ~10 km from Springfield's, so a Springfield
+  // reader placed near Mount Vernon still gets "Here Springfield.")
+  var SNAP_KM = 12;
+
+  function nameMatches(loc, city) {
+    if (!city) return false;
+    if (window.HereSmart.sameName(loc.name, city)) return true;
+    return (loc.aliases || []).some(function (a) { return window.HereSmart.sameName(a, city); });
+  }
+
+  // Nearest location to the point: within maxKm if given, else within its own area size.
+  function nearest(point, list, maxKm) {
+    var best = null;
+    list.forEach(function (loc) {
+      var p = window.HereSmart.pointOf(loc);
+      if (!p) return;
+      var d = window.HereSmart.distanceKm(point, p);
+      var limit = maxKm === undefined ? (Number(loc.radius_km) || 8) : Math.max(maxKm, Number(loc.radius_km) || 0);
+      if (d <= limit && (!best || d < best.d)) best = { loc: loc, d: d };
+    });
+    return best && best.loc;
+  }
+
   // Decide what to call the reader's place, and whether we cover it.
-  function resolvePlace(locations) {
-    var choice = read(CHOICE_KEY);
+  function resolvePlace(locations, menuOn) {
+    var choice = menuOn ? read(CHOICE_KEY) : null;  // menu off: earlier picks don't apply
     if (choice === EVERYWHERE) return Promise.resolve({ name: '', covered: null, point: null, chosen: true });
     if (choice) {
       var picked = findLocation(locations, choice);
       if (picked) return Promise.resolve({ name: picked.name, covered: picked, point: window.HereSmart.pointOf(picked), chosen: true });
     }
+    var active = locations.filter(function (loc) { return loc.stories > 0; });
+    if (!active.length) active = locations;
     return detect().then(function (geo) {
       if (!geo) return { name: '', covered: null, point: null };
       var point = isFinite(geo.lat) && isFinite(geo.lng) ? { lat: geo.lat, lng: geo.lng } : null;
-      var near = point ? window.HereSmart.nearestLocation(point, locations) : null;
-      if (near) return { name: near.location.name, covered: near.location, point: point };
+      // 1. The lookup names a city we have stories from.
+      var loc = active.filter(function (l) { return nameMatches(l, geo.city); })[0];
+      // 2. Close to an area we have stories from.
+      if (!loc && point) loc = nearest(point, active, SNAP_KM);
+      // 3. Inside another covered area (no stories there yet).
+      if (!loc && point) loc = nearest(point, locations);
+      if (loc) return { name: loc.name, covered: loc, point: point || window.HereSmart.pointOf(loc) };
       return { name: geo.city, covered: null, point: point };
     });
   }
@@ -187,15 +221,17 @@
 
   function run() {
     if (!window.HereSmart || !window.fetch || !window.Promise) return;
-    getJSON('/data/locations.json', 3000).then(function (data) {
+    getJSON('/data/places.json', 3000).then(function (data) {
       var locations = (data && data.locations) || [];
-      return resolvePlace(locations).then(function (place) {
+      var menuOn = !!(data && data.show_menu);
+      return resolvePlace(locations, menuOn).then(function (place) {
         setHeadline(place.name);
         setBanner(place.covered);
         var grid = document.querySelector('[data-local-grid]');
         if (grid && place.point) reorder(grid, place, locations);
         var bar = document.querySelector('[data-local-bar]');
-        if (bar) renderBar(bar, locations, place);
+        // Local stories menu: Site Settings > Locations > Show menu.
+        if (bar && menuOn) renderBar(bar, locations, place);
       });
     });
   }

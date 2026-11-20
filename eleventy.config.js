@@ -78,7 +78,8 @@ function readSettings(name) {
 }
 const SETTINGS = {
   categories: asList(readSettings("categories").categories),
-  locations: asList(readSettings("locations").locations)
+  locations: asList(readSettings("locations").locations),
+  showLocalMenu: readSettings("locations").show_menu === true
 };
 
 function plainText(value) {
@@ -358,6 +359,19 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addFilter("head", (items, n) => asList(items).slice(0, n));
   // Plain text of a story (body + content blocks) for the site search index.
   eleventyConfig.addFilter("searchText", item => plainText(bodyOf(item)).slice(0, 6000));
+  // What the reader's browser needs to pick their area (assets/local.js):
+  // every location, how many published stories it has, and the menu switch.
+  eleventyConfig.addFilter("placesData", items => {
+    const counts = {};
+    for (const item of asList(items)) {
+      const key = String(item.data.location || "").trim().toLowerCase();
+      if (key) counts[key] = (counts[key] || 0) + 1;
+    }
+    return {
+      show_menu: SETTINGS.showLocalMenu,
+      locations: SETTINGS.locations.map(loc => ({ ...loc, stories: counts[String(loc.name || "").trim().toLowerCase()] || 0 }))
+    };
+  });
   eleventyConfig.addFilter("newestFirst", items =>
     asList(items).slice().sort((a, b) => new Date(b.data.date || 0) - new Date(a.data.date || 0)));
   // Items published within the last `hours` hours of this build (Google News sitemaps cover 2 days).
