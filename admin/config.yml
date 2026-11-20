@@ -489,8 +489,14 @@ collections:
       - name: "locations"
         label: "Locations"
         file: "content/settings/locations.json"
-        description: "Cities Here News covers. Readers in these areas see local stories first and the site name reads “Here <city>”."
+        description: "Cities Here News covers. Readers in these areas see local stories first and the homepage reads “Here <city>.”"
         fields:
+          - label: "Show the “Local stories” menu to readers"
+            name: "show_menu"
+            widget: "boolean"
+            default: false
+            required: false
+            hint: "Off: each reader's area is detected automatically and they can't change it. Turn on once Here News covers several areas, so readers can pick their own."
           - label: "Locations"
             name: "locations"
             widget: "list"
