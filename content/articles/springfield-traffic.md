@@ -7,7 +7,7 @@ language: bilingual
 featured: false
 pinned: false
 author: Ali Gamal
-image: /assets/uploads/20261123_115001.jpg
+image: /assets/uploads/traffic.jpg
 image_size: medium
 ads: true
 ---
