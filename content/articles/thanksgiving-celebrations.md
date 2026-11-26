@@ -5,6 +5,12 @@ subtitle: Forecasters warn of street flooding, downed trees and power outages;
 slug: thanksgiving-celebrations
 date: 2026-11-26T06:45:00.000-05:00
 language: en
+description: >+
+  Springfield Town Center, the county's largest shopping destination and the
+  anchor of the Springfield Mall area, is closed for the holiday, according to
+  its hours page. It reopens at 9 a.m. Friday — three hours ahead of its normal
+  10 a.m. start — for the traditional post-Thanksgiving rush.
+
 featured: false
 pinned: false
 author: Ali Gamal
