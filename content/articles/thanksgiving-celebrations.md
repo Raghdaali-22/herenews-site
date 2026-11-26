@@ -8,7 +8,7 @@ language: en
 featured: false
 pinned: false
 author: Ali Gamal
-image: /assets/uploads/20261122_150929.jpg
+image: /assets/uploads/springfield-mall.jpg
 image_size: medium
 ads: true
 ---
