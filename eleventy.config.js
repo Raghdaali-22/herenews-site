@@ -120,12 +120,34 @@ function enrich(item) {
     const guess = smart.suggestLocation(fields, SETTINGS.locations);
     if (guess) { d.location = guess.name; d.location_auto = true; }
   }
+  if (d.image && !assetExists(d.image)) {
+    warnMissing(d.image, item.inputPath);
+    d.image = "";
+  }
   if (!String(d.description || "").trim()) {
     const first = body.split(/\n\s*\n/).map(plainText).find(p => p.length > 40) || "";
     if (first) d.description = first.length > 220 ? `${first.slice(0, 217).replace(/\s+\S*$/, "")}…` : first;
   }
   d.__enriched = true;
   return item;
+}
+
+// Does a site path like "/assets/uploads/x.jpg" exist in the project?
+// External links (https://...) are assumed fine.
+const missingAssets = new Set();
+function assetExists(src) {
+  if (!src) return false;
+  let p = String(src).replace(/&amp;/g, "&").split(/[?#]/)[0];
+  if (/^[a-z]+:\/\//i.test(p) || p.startsWith("//") || p.startsWith("data:")) return true;
+  try { p = decodeURI(p); } catch {}
+  return fs.existsSync(path.join(__dirname, p.replace(/^\/+/, "")));
+}
+function warnMissing(src, where) {
+  const key = `${src} (${where})`;
+  if (!missingAssets.has(key)) {
+    missingAssets.add(key);
+    console.warn(`[HERE NEWS] Missing image left out: ${key}`);
+  }
 }
 
 // Pinned items first (by pin position, then newest), then everything else newest first.
@@ -169,8 +191,10 @@ function adsFor(ads, context, placement, limit) {
   const sponsor = context.sponsor ? slugify(context.sponsor) : "";
 
   const live = asList(ads)
-    .map(ad => ({ ...ad.data, id: pubSlug(ad) }))
+    // id: the file name, unique even if two ads share a "URL name"; slug: for sponsor matching.
+    .map(ad => ({ ...ad.data, id: pageSlug(ad), slug: pubSlug(ad) }))
     .filter(ad => ad.active !== false && ad.image && ad.url)
+    .filter(ad => assetExists(ad.image) || (warnMissing(ad.image, `ad ${ad.id}`), false))
     .filter(ad => {
       const placements = asList(ad.placements);
       return placements.length === 0 || placements.includes(placement);
@@ -183,7 +207,7 @@ function adsFor(ads, context, placement, limit) {
   let candidates;
   if (sponsor) {
     // Manual sponsor selection overrides automatic matching.
-    candidates = live.filter(ad => ad.id === sponsor).map(ad => ({ ad, score: 100 }));
+    candidates = live.filter(ad => ad.slug === sponsor || ad.id === sponsor).map(ad => ({ ad, score: 100 }));
   } else {
     candidates = live
       .filter(ad => {
@@ -404,6 +428,18 @@ module.exports = function(eleventyConfig) {
     return adsFor(ads, context, placement, limit);
   });
   eleventyConfig.addFilter("injectAfterParagraph", injectAfterParagraph);
+
+  // Never publish a broken image: drop <img> tags whose local file is gone
+  // (e.g. deleted from the media library while an article still used it).
+  eleventyConfig.addTransform("dropMissingImages", function(content) {
+    const out = this.page && this.page.outputPath;
+    if (!out || !out.endsWith(".html")) return content;
+    return content.replace(/<img\b[^>]*?\ssrc="([^"]+)"[^>]*>/g, (tag, src) => {
+      if (assetExists(src)) return tag;
+      warnMissing(src, this.page.inputPath);
+      return "";
+    });
+  });
 
   // Let each paragraph, heading and caption pick its own direction so
   // Arabic and English text in the same article both align correctly.

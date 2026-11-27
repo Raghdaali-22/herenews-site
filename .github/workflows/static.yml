@@ -18,7 +18,7 @@ jobs:
   deploy:
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url || steps.deployment_retry.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -30,8 +30,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
+          cache: 'npm'
       - name: Install dependencies
-        run: npm install
+        # Exact versions from package-lock.json, so a new release of a build
+        # tool can't break deploys without a change here.
+        run: npm ci
       - name: Build site
         run: npm run build
       - name: Setup Pages
@@ -40,8 +43,20 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: '_site'
+      # GitHub sometimes can't find the just-uploaded site for a moment
+      # ("No artifacts named github-pages were found"). If the deploy fails,
+      # wait and try once more in the same run (re-running the whole job would
+      # upload a second copy and fail with "Multiple artifacts" instead).
       - name: Deploy to GitHub Pages
         id: deployment
+        continue-on-error: true
+        uses: actions/deploy-pages@v4
+      - name: Wait before retrying the deploy
+        if: steps.deployment.outcome == 'failure'
+        run: sleep 30
+      - name: Deploy to GitHub Pages (retry)
+        id: deployment_retry
+        if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@v4
       - name: Tell search engines about new and updated stories
         if: github.event_name == 'push'

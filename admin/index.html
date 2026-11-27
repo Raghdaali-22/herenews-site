@@ -22,7 +22,10 @@
     link.setAttribute('rel', 'noopener noreferrer');
   }, true);
  </script>
- <script src="https://unpkg.com/decap-cms@^3.8.3/dist/decap-cms.js"></script>
+ <!-- Unique names + web-sized photos for every upload (before Decap loads) -->
+ <script src="/admin/upload-helper.js"></script>
+ <!-- Pinned to an exact version so a new Decap release can't change the editor overnight. -->
+ <script src="https://unpkg.com/decap-cms@3.18.0/dist/decap-cms.js"></script>
  <script src="/assets/smart.js"></script>
  <script src="/admin/preview.js"></script>
 </body>
