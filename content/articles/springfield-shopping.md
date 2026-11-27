@@ -10,7 +10,7 @@ description: The storm has passed, the mall opens at 9 a.m. and forecasters say
 featured: false
 pinned: false
 author: Ali Gamal
-image: /assets/uploads/20261122_151024.jpg
+image: /assets/uploads/springfield-mall-entrance.jpg
 image_size: medium
 ads: true
 ---
