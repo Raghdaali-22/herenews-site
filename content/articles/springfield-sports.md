@@ -14,7 +14,7 @@ description: Dierks was the engine behind an offense that rarely stalled. In the
 featured: false
 pinned: false
 author: Ali Gamal
-image: /assets/uploads/921546343_1622179682407464_6057183944505568288_n.jpg
+image: /assets/uploads/anna-dierks-sports.jpg
 image_size: medium
 ads: true
 ---
