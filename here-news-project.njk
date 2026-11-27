@@ -28,7 +28,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <meta name="description" content="The Here News Project is coming soon — a verified, location-based journalism platform that empowers independent journalists and helps readers access authentic local stories." />
   <link rel="canonical" href="https://herenews.net/here-news-project.html" />
   <link rel="stylesheet" href="/assets/styles.css" />
-  <script src="/assets/smart.js" defer></script><script src="/assets/local.js" defer></script><script src="/assets/track.js" defer></script>
+  <script src="/assets/smart.js" defer></script><script src="/assets/local.js" defer></script><script src="/assets/track.js" defer></script><script src="/assets/donate.js" defer></script>
   </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -174,7 +174,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <p class="small notice">
              <a href="mailto:thehonanews@gmail.com"><strong>thehonanews@gmail.com</strong></a>
             </p>
-            <a class="btn" href="/about.html">Meet the founder</a>
+            <div class="btn-row">
+              <button type="button" class="btn primary" data-donate="Here News Project: Get involved">Support Here News</button>
+              <a class="btn" href="/about.html">Meet the founder</a>
+            </div>
           </div>
         </div>
       </div>
@@ -195,6 +198,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
+<!-- Thigmo Donation Widget (Modal) -->
+<script src="https://thigmos.com/embed/donations-widget.js"
+  data-business-id="q8x8aobosphl9izussyvd0vi8"
+  data-max-plans="3"
+  data-layout="modal"
+  data-theme="light"
+  data-primary-color="#1e1d1c"
+  data-accent-color="#f5f2e8"
+  data-show-descriptions="true"
+  data-show-custom-amounts="true"
+  data-show-recurring="true"
+  data-modal-button-text="Donate Now"
+  data-modal-position="bottom-right"></script>
+<!-- End Thigmo Donation Widget -->
 </body>
 </html>
 

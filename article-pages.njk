@@ -84,6 +84,11 @@ eleventyComputed:
 
   {% include "item-tags.njk" %}
 
+  <aside class="support-note" aria-label="Support Here News">
+    <p><strong>Independent local reporting.</strong> Here News is reader-supported. If this story was useful, help keep it going.</p>
+    <button type="button" class="btn primary" data-donate="Article: end">Support Here News</button>
+  </aside>
+
   {% set adSlot = 'bottom' %}{% set adLang = lang %}{% set adList = collections.advertisements | adsFor(adContext, 'bottom', 3) %}{% include "ad-slot.njk" %}
 
 </article>
