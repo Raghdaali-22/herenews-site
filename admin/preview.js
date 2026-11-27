@@ -25,7 +25,7 @@
 
   var LABELS = {
     en: { all: 'All publications', by: 'By', source: 'Source', credits: 'Credits', tags: 'Tags', series: 'Part of the series', part: 'Part', article: 'Article', advertisement: 'Advertisement', sponsoredBy: 'Sponsored by' },
-    ar: { all: 'كل المنشورات', by: 'بقلم', source: 'المصدر', credits: 'إسهامات', tags: 'الوسوم', series: 'جزء من سلسلة', part: 'الجزء', article: 'مقال', advertisement: 'إعلان', sponsoredBy: 'برعاية' }
+    ar: { all: '\u0643\u0644 \u0627\u0644\u0645\u0646\u0634\u0648\u0631\u0627\u062a', by: '\u0628\u0642\u0644\u0645', source: '\u0627\u0644\u0645\u0635\u062f\u0631', credits: '\u0625\u0633\u0647\u0627\u0645\u0627\u062a', tags: '\u0627\u0644\u0648\u0633\u0648\u0645', series: '\u062c\u0632\u0621 \u0645\u0646 \u0633\u0644\u0633\u0644\u0629', part: '\u0627\u0644\u062c\u0632\u0621', article: '\u0645\u0642\u0627\u0644', advertisement: '\u0625\u0639\u0644\u0627\u0646', sponsoredBy: '\u0628\u0631\u0639\u0627\u064a\u0629' }
   };
 
   function toJS(value) {
@@ -36,7 +36,7 @@
     try { return props.getAsset ? String(props.getAsset(path)) : path; } catch (e) { return path; }
   }
   function slugify(value) {
-    return String(value || '').normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase().trim()
+    return String(value || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim()
       .replace(/[^\p{L}\p{N}]+/gu, '-').replace(/^-+|-+$/g, '');
   }
   function formatDate(value, lang) {
@@ -96,7 +96,7 @@
       case 'quote':
         return b.text ? h('figure', { key: i, className: 'block-quote' },
           h('blockquote', null, h('p', { dir: 'auto' }, b.text)),
-          b.attribution ? h('figcaption', { dir: 'auto' }, '— ' + b.attribution) : null) : null;
+          b.attribution ? h('figcaption', { dir: 'auto' }, '\u2014 ' + b.attribution) : null) : null;
       case 'divider':
         return h('hr', { key: i, className: 'block-divider divider-' + (b.style || 'line') });
       case 'video': {
@@ -104,7 +104,7 @@
         var embed = videoEmbed(b.url);
         return h('figure', { key: i, className: 'block-video' },
           embed ? h('div', { className: 'video-frame' }, h('iframe', { src: embed, title: b.caption || 'Video', allowFullScreen: true }))
-                : h('p', null, h('a', { className: 'btn', href: b.url }, 'Watch video ↗')),
+                : h('p', null, h('a', { className: 'btn', href: b.url }, 'Watch video \u2197')),
           b.caption ? h('figcaption', { dir: 'auto' }, b.caption) : null);
       }
       case 'audio': {
@@ -153,7 +153,7 @@
     var autoLocation = !get('location') && smart ? smart.suggestLocation(fields, SETTINGS.locations) : null;
     var notes = [];
     if (autoCategory) notes.push('Category: ' + autoCategory.name + ' (suggested from the title and text; choose one above to override)');
-    else if (!get('category')) notes.push('Category: none found yet. Pick one above, or add keywords under Site Settings → Categories.');
+    else if (!get('category')) notes.push('Category: none found yet. Pick one above, or add keywords under Site Settings \u2192 Categories.');
     if (get('location')) notes.push('Location: ' + get('location'));
     else if (autoLocation) notes.push('Location: ' + autoLocation.name + ' (detected from the text)');
     if (e.getIn(['data', 'pinned']) === true) notes.push('Pinned to top' + (get('pin_order') ? ', position ' + get('pin_order') : ''));
@@ -166,18 +166,18 @@
       h('div', { className: 'article-layout' },
         h('article', articleProps,
           notes.length ? h('ul', { className: 'preview-notes', dir: 'ltr' }, notes.map(function (n, i) { return h('li', { key: i }, n); })) : null,
-          h('p', { className: 'article-back' }, h('a', null, (lang === 'ar' ? '→ ' : '← ') + t.all)),
+          h('p', { className: 'article-back' }, h('a', null, (lang === 'ar' ? '\u2192 ' : '\u2190 ') + t.all)),
           h('p', { className: 'small article-meta', dir: 'auto' },
             category ? h('a', { className: 'category-link' }, category) : null,
-            category ? ' · ' : null,
-            t.article + ' · ' + formatDate(get('date'), lang)),
+            category ? ' \u00b7 ' : null,
+            t.article + ' \u00b7 ' + formatDate(get('date'), lang)),
           get('series') ? h('p', { className: 'article-series', dir: 'auto' }, t.series + ': ' + get('series') +
-            (get('series_order') ? ' · ' + t.part + ' ' + get('series_order') : '')) : null,
+            (get('series_order') ? ' \u00b7 ' + t.part + ' ' + get('series_order') : '')) : null,
           h('h1', { dir: 'auto' }, get('title')),
           get('subtitle') ? h('p', { className: 'article-subtitle', dir: 'auto' }, get('subtitle')) : null,
           h('p', { className: 'small article-byline', dir: 'auto' },
             t.by + ' ', h('span', { className: 'author' }, get('author') || 'Here News'),
-            source ? ' · ' + t.source + ': ' : null, source),
+            source ? ' \u00b7 ' + t.source + ': ' : null, source),
           image ? h('figure', { className: 'publication-cover-wrapper cover-' + (get('image_size') || 'medium') },
             h('img', { className: 'publication-cover', src: asset(props, image), alt: get('image_alt') || get('title') }),
             (get('image_caption') || get('image_credit')) ? h('figcaption', { className: 'publication-image-caption', dir: 'auto' },
@@ -207,7 +207,7 @@
       return h('aside', { key: slot, className: 'ad-slot ad-slot--' + slot },
         h('p', { className: 'small preview-note' }, 'Placement: ' + slot),
         h('div', { className: 'ad' },
-          h('p', { className: 'ad-label' }, LABELS.en.advertisement + ' · ' + LABELS.en.sponsoredBy + ' ' + (get('advertiser') || get('title'))),
+          h('p', { className: 'ad-label' }, LABELS.en.advertisement + ' \u00b7 ' + LABELS.en.sponsoredBy + ' ' + (get('advertiser') || get('title'))),
           h('a', { className: 'ad-link', href: get('url') || undefined },
             get('image') ? h('img', { className: 'ad-creative', src: asset(props, get('image')), alt: get('image_alt') || '' }) : null,
             (get('headline') || get('text')) ? h('span', { className: 'ad-copy' },

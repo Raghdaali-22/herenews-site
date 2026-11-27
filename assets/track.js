@@ -38,7 +38,7 @@
     var label = ad.querySelector('.ad-label');
     return {
       ad_id: ad.getAttribute('data-ad-id') || '',
-      ad_advertiser: ad.getAttribute('data-ad-advertiser') || (label ? label.textContent.replace(/^.*·\s*/, '').trim() : ''),
+      ad_advertiser: ad.getAttribute('data-ad-advertiser') || (label ? label.textContent.replace(/^.*\u00b7\s*/, '').trim() : ''),
       ad_slot: slot ? slot.getAttribute('data-ad-slot') : ''
     };
   }
