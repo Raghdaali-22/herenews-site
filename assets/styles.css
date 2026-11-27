@@ -759,3 +759,20 @@ article,
   }
   .publication-heading.has-banner .city-banner{ margin-top: 0; }
 }
+
+/* Support / donation prompts */
+.support-row{ display:flex; flex-wrap:wrap; align-items:center; gap:12px 18px; margin-top: 14px; }
+.support-row p{ margin:0; flex: 1 1 260px; }
+.support-note{
+  display:flex; flex-wrap:wrap; align-items:center; gap:12px 18px;
+  margin: 34px 0 0; padding: 18px 20px; border-radius: var(--radius);
+  background: rgba(255,255,255,.55); border: 1px solid var(--line);
+}
+.support-note p{ margin:0; flex: 1 1 280px; font-size: 16px; line-height: 1.5; }
+button.btn{ font: inherit; font-weight: 700; cursor: pointer; }
+
+/* Thigmo donation widget: keep its light-accent bits readable on white,
+   and leave room so the floating "Donate Now" button never covers the footer. */
+.thigmo-donation-empty a{ color: #1e1d1c !important; text-decoration: underline !important; }
+.thigmo-donation-spinner{ border-top-color: #1e1d1c !important; }
+footer{ padding-bottom: 96px; }
